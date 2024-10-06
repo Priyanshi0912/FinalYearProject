@@ -262,14 +262,14 @@ def analyze_certificate(request):
             }
 
             return render(request, 'analyze.html', details)
-
         except ssl.SSLError as e:
-            return HttpResponse(f"SSL Error: Unable to establish a secure connection to {hostname}")
+            return render(request, 'error_page.html', {'message': f"SSL Error: Unable to establish a secure connection to {hostname}"})
         except socket.gaierror:
-            return HttpResponse(f"Error: Unable to resolve hostname {hostname}")
+            return render(request, 'error_page.html', {'message': f"Error: Unable to resolve hostname {hostname}"})
         except socket.error as e:
-            return HttpResponse(f"Connection Error: Unable to connect to {hostname}")
+            return render(request, 'error_page.html', {'message': f"Connection Error: Unable to connect to {hostname}"})
         except Exception as e:
-            return HttpResponse(f"Unexpected error analyzing the certificate: {str(e)}")
+            return render(request, 'error_page.html', {'message': f"Unexpected error analyzing the certificate: {str(e)}"})
+        
 
     return render(request, 'analyze.html')
