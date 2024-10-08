@@ -1,7 +1,7 @@
 
 
 
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 import ssl
 import socket
@@ -11,10 +11,14 @@ from datetime import datetime, timezone
 from django.utils.timezone import make_aware
 import re
 
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import UserCreationForm
+
 
 def home(request):
-    # if request.user.is_authenticated:
-    #     return redirect('analyze_certificate')  # Redirect to the analysis page if logged in
     return render(request, 'home.html')
 
 from django.contrib.auth import logout
@@ -27,39 +31,10 @@ def logout_view(request):
 def grading_system(request):
     return render(request, 'grading_system.html')
 
-from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
-from django.contrib import messages
 
-from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
-from django.contrib import messages
 
-from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
-from django.contrib import messages
 
-# def login_view(request):
-#     if request.method == 'POST':
-#         username = request.POST.get('username')  # Safely get 'username'
-#         password = request.POST.get('password')  # Safely get 'password'
 
-#         if not username or not password:
-#             messages.error(request, 'Both username and password are required.')
-#             return redirect('login_view')
-
-#         # Authenticate the user
-#         user = authenticate(request, username=username, password=password)
-        
-#         if user is not None:
-#             login(request, user)
-#             messages.success(request, 'You have logged in successfully!')
-#             return redirect('analyze_certificate')  # Redirect to the analysis page or other page
-#         else:
-#             messages.error(request, 'Login credentials are incorrect. Do not have an account? Sign up.')
-#             return redirect('login_view')
-
-#     return render(request, 'login.html')
 
 def login_view(request):
     if request.method == 'POST':
@@ -76,21 +51,8 @@ def login_view(request):
 
     return render(request, 'login.html')
 
-from .forms import RegistrationForm 
-from django.shortcuts import render, redirect
-from django.contrib import messages
 
-# def register_view(request):
-#     if request.method == 'POST':
-#         form = UserCreationForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, 'Registration successful. Please log in.')
-#             return redirect('login_view')  # Redirect to login after successful registration
-#     else:
-#         form = UserCreationForm()
-    
-#     return render(request, 'register.html', {'form': form})
+
 
 
 
