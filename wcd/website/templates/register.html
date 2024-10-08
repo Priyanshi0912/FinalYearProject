@@ -1,0 +1,17 @@
+<!-- <h1>Register</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Register</button>
+</form> -->
+
+
+<h1>Register</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Renders the form fields -->
+    <button type="submit">Register</button>
+</form>
+<p>Already have an account? <a href="{% url 'login_view' %}">Login here</a>.</p>
+
+

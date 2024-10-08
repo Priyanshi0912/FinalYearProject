@@ -13,11 +13,103 @@ import re
 
 
 def home(request):
+    # if request.user.is_authenticated:
+    #     return redirect('analyze_certificate')  # Redirect to the analysis page if logged in
     return render(request, 'home.html')
 
+from django.contrib.auth import logout
+
+def logout_view(request):
+    logout(request)
+    messages.success(request, 'You have been logged out.')
+    return redirect('home')  # Redirect to home page after logout
 
 def grading_system(request):
     return render(request, 'grading_system.html')
+
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.contrib import messages
+
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.contrib import messages
+
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.contrib import messages
+
+# def login_view(request):
+#     if request.method == 'POST':
+#         username = request.POST.get('username')  # Safely get 'username'
+#         password = request.POST.get('password')  # Safely get 'password'
+
+#         if not username or not password:
+#             messages.error(request, 'Both username and password are required.')
+#             return redirect('login_view')
+
+#         # Authenticate the user
+#         user = authenticate(request, username=username, password=password)
+        
+#         if user is not None:
+#             login(request, user)
+#             messages.success(request, 'You have logged in successfully!')
+#             return redirect('analyze_certificate')  # Redirect to the analysis page or other page
+#         else:
+#             messages.error(request, 'Login credentials are incorrect. Do not have an account? Sign up.')
+#             return redirect('login_view')
+
+#     return render(request, 'login.html')
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('analyze_certificate')  # Redirect to the analysis page after successful login
+        else:
+            # Handle invalid login (e.g., show an error message)
+            return render(request, 'login.html', {'error': 'Invalid credentials'})
+
+    return render(request, 'login.html')
+
+from .forms import RegistrationForm 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+
+# def register_view(request):
+#     if request.method == 'POST':
+#         form = UserCreationForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'Registration successful. Please log in.')
+#             return redirect('login_view')  # Redirect to login after successful registration
+#     else:
+#         form = UserCreationForm()
+    
+#     return render(request, 'register.html', {'form': form})
+
+
+
+def register_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)  # Create a form instance with POST data
+        if form.is_valid():  # Check if the form is valid
+            form.save()  # Save the new user
+            messages.success(request, 'Registration successful! You can now log in.')  # Optional success message
+            return redirect('login_view')  # Redirect to the login page after successful registration
+    else:
+        form = UserCreationForm()  # Create a blank form for GET requests
+
+    return render(request, 'register.html', {'form': form})
+
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 
 def security_recommendations(request):
