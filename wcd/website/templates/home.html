@@ -117,11 +117,11 @@
     {% if user.is_authenticated %}
         <p>You are logged in as {{ user.username }}.</p>
         <a href="/analyze/" class="analyze-button"><b>Start Analysis</b></a>
-        <a href="{% url 'logout_view' %}" class="btn btn-danger">Logout</a> <!-- Ensure you have a logout view -->
+        <a href="{% url 'logout_view' %}" class="analyze-button">Logout</a> 
     {% else %}
         <p>Please log in to continue.</p>
-        <a href="{% url 'login_view' %}" class="btn btn-primary">Login</a>
-        <a href="{% url 'register_view' %}" class="btn btn-secondary">Register</a>
+        <a href="{% url 'login_view' %}" class="analyze-button">Login</a>
+        <a href="{% url 'register_view' %}" class="analyze-button">Register</a>
     {% endif %}
 
     <!-- Additional content -->
@@ -138,3 +138,5 @@
 
 </body>
 </html>
+
+
