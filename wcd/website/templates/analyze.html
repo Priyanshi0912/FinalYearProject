@@ -1,30 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SSL/TLS Certificate Analysis</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0; 
+            /* background: rgb(252,195,195);
+            background: linear-gradient(90deg, rgba(252,195,195,0.3170518207282913) 24%, rgba(221,195,252,0.9781162464985994) 46%, rgba(142,146,252,1) 85%); */
+            background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+            /* background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%); */
+            /* background-color: #e8eef1  !important; */
+            /* old: #e8eef1 #e6eef9
         }
+
+        header {
+            position: fixed;
+            /* Ensuring navbar is fixed */
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            /* Higher z-index to stay above other elements */
+        }
+
+        .header-text{
+            margin-top: 30px;
+        }
+
         button {
             padding: 10px 20px;
             font-size: 16px;
-            color: #fff; /* White text color */
-            background-color: #4a90e2; /* Blue background color */
+            color: #fff;
+            background-color: #212529;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+            transition: background-color 0.3s ease;
         }
+
         .button {
+            display: flex;
             margin-top: 20px;
             margin-right: 5px;
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #4a90e2;
+            background-color: #041324;
             color: white;
             border: none;
             border-radius: 5px;
@@ -34,7 +59,12 @@
         }
 
         .button:hover {
-            background-color: #357abd;
+            background-color: #03172c;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
         }
 
         .form-container {
@@ -56,20 +86,20 @@
         label {
             font-size: 16px;
             margin-bottom: 10px;
-            color: #4a90e2;
+            color: #212830;
         }
 
         input[type="text"] {
             padding: 10px;
             font-size: 16px;
-            border: 2px solid #4a90e2;
+            border: 2px solid #0b1827;
             border-radius: 4px;
             margin-bottom: 20px;
             transition: border-color 0.3s ease;
         }
 
         input[type="text"]:focus {
-            border-color: #007bff;
+            border-color: #111820;
             outline: none;
         }
 
@@ -80,7 +110,7 @@
         }
 
         .grade-box {
-            background-color: #f4a742;
+            background-color: #429ef4;
             width: 100px;
             height: 100px;
             display: flex;
@@ -91,30 +121,33 @@
             color: white;
         }
 
-        .bar-section {
-            margin-left: 20px;
-            width: 400px;
-        }
-
         .bar-wrapper {
-            margin-bottom: 10px;
-        }
-
-        .bar {
-            width: 100%;
-            background-color: #e0e0e0;
-            height: 20px;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        .bar-fill {
-            height: 100%;
-            background-color: #4caf50;
+            display: flex;
+            align-items: center;
         }
 
         .label {
-            margin-bottom: 5px;
+            width: 30%;
+            padding-right: 10px;
+        }
+
+        .bar {
+            background-color: #e0f2fe;
+            border-radius: 5px;
+            height: 20px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .bar-fill {
+            background-color: #4299e1;
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .percentage {
+            width: 10%;
+            text-align: left;
         }
 
         .warning-section {
@@ -129,11 +162,14 @@
             margin-top: 20px;
         }
 
-        table, th, td {
+        table,
+        th,
+        td {
             border: 1px solid black;
         }
 
-        th, td {
+        th,
+        td {
             padding: 10px;
             text-align: left;
         }
@@ -142,130 +178,337 @@
             margin-bottom: 30px;
         }
     </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+    <div class="min-h-screen bg-gradient-to-r from-white to-blue-500">
+        <!-- Navigation Bar -->
+        <header class="fixed top-0 left-0 w-full z-50">
+            <div class="px-3 py-2 text-bg-dark border-bottom">
+                <div class="container">
+                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                        <a href="{% url 'home' %}"
+                            class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                                <use xlink:href="#bootstrap"></use>
+                            </svg>
+                            <i class="bi bi-shield-check" style="font-size: 2rem"></i>
+                            CertiScan
+                        </a>
 
-    <h1>SSL/TLS Certificate Analyzer</h1>
-    <a href="{% url 'home' %}" class="button"> Home </a>
-    <a href="{% url 'grading_system' %}" class="button">Know more about grading system</a>
-    <a href="{% url 'security_recommendations' %}" class="button">View Security Recommendations</a>
-
-
-    
-
-    <div class="form-container">
-        <form method="post" action="{% url 'analyze_certificate' %}">
-            {% csrf_token %}
-            <label for="hostname">Enter URL or Hostname:</label>
-            <input type="text" id="hostname" name="hostname" required>
-            <button type="submit">Analyze</button>
-        </form>
-    </div>
-
-    <h1 id="analysis-report-header">ANALYSIS REPORT</h1>
-    <div id="analysis-report" style="display: none;">  <!-- Wrap the analysis report content -->
-        {% if grade %}
-            <div class="grade-section">
-                <div class="grade-box">
-                    {{ grade }}
+                        <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                            <li>
+                                <a href="{% url 'analyze_certificate' %}" class="nav-link text-secondary">
+                                    <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                        <use xlink:href="#home"></use>
+                                    </svg>
+                                    <i class="bi bi-house-fill"></i>
+                                    Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'grading_system'%}" class="nav-link text-white">
+                                    <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                        <use xlink:href="#speedometer2"></use>
+                                    </svg>
+                                    <i class="bi bi-speedometer2"></i>
+                                    About Grades
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'home' %}" class="nav-link text-white">
+                                    <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                        <use xlink:href="#people-circle"></use>
+                                    </svg>
+                                    <i class="bi bi-person"></i>
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="bar-section">
-                    <div class="bar-wrapper">
-                        <div class="label">Certificate</div>
-                        <div class="bar">
-                            <div class="bar-fill" style="width: {{ bar_percentages.certificate }}%;"></div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+
+        <div class="px-4 py-2 pt-5 my-3 text-center">
+            <h1 class="header-text py-4 display-4 fw-bold text-body-emphasis">
+                Uncover How Secure Your Website Really Is!
+            </h1>
+            <div class="col-lg-6 mx-auto">
+                <p class="lead mb-4">
+                    Get your website evaluated with a comprehensive security grade. Gain
+                    detailed insights into vulnerabilities, strengthen your defenses,
+                    and ensure your site is fully protected. Stay ahead of threats with
+                    actionable recommendations tailored for your web security needs.
+                </p>
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+                    <div class="form-container">
+                        <form method="post" action="{% url 'analyze_certificate' %}">
+                            {% csrf_token %}
+                            <input type="text" id="hostname" name="hostname" required
+                                placeholder="Enter URL or Hostname" />
+                            <button type="submit">Analyze</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if grade %}
+
+        <!-- Grade and Bar Graph -->
+       <section id="analysis-report">
+        <section class="container mx-auto py-12 border-top border-bottom">
+            <h2 class="text-3xl font-bold text-center mb-3 py-3">
+                Security Grade Analysis
+            </h2>
+            <div class="flex justify-center">
+                <div class="w-full max-w-2xl bg-white p-6 rounded-lg shadow-md mb-5">
+                    <!-- Grade: -->
+                    <div class="flex justify-center items-center h-screen">
+                        <div class="grade-section text-center flex justify-center">
+                            <div class="grade flex justify-center items-center mb-3 mx-auto">
+                                <h3 class="m-auto text-lg font-semibold pt-4 pb-2 -ml-2 mb-4">
+                                    Security Grade:
+                                </h3>
+                                <div class="grade-box bg-blue-500 text-white rounded ml-1">
+                                    {{ grade }}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="bar-wrapper">
-                        <div class="label">Protocol Support</div>
-                        <div class="bar">
-                            <div class="bar-fill" style="width: {{ bar_percentages.protocol_support }}%;"></div>
-                        </div>
-                    </div>
-                    <div class="bar-wrapper">
-                        <div class="label">Key Exchange</div>
-                        <div class="bar">
-                            <div class="bar-fill" style="width: {{ bar_percentages.key_exchange }}%;"></div>
-                        </div>
-                    </div>
-                    <div class="bar-wrapper">
-                        <div class="label">Cipher Strength</div>
-                        <div class="bar">
-                            <div class="bar-fill" style="width: {{ bar_percentages.cipher_strength }}%;"></div>
+
+                    <!-- Bar Graph Section -->
+                    <div class="bar-section flex flex-col justify-center items-center mt-8">
+                        <h2 class="text-3xl font-bold text-center mb-3 py-1">
+                            Your Website's Security Summary:
+                        </h2>
+
+                        <!-- Smaller Container for Bars -->
+                        <div class="w-full max-w-md bg-white p-4 rounded-lg shadow-md">
+                            <div class="bar-wrapper w-full mb-4 flex items-center">
+                                <div class="label w-1/3">Certificate</div>
+                                <div class="bar w-2/3 bg-blue-200">
+                                    <div class="bar-fill bg-blue-500"
+                                        style="width: {{ bar_percentages.certificate }}%;"></div>
+                                </div>
+                                <div class="percentage ml-4">
+                                    {{ bar_percentages.certificate }}%
+                                </div>
+                            </div>
+
+                            <div class="bar-wrapper w-full mb-4 flex items-center">
+                                <div class="label w-1/3">Protocol Support</div>
+                                <div class="bar w-2/3 bg-blue-200">
+                                    <div class="bar-fill bg-blue-500"
+                                        style="width: {{ bar_percentages.protocol_support }}%;"></div>
+                                </div>
+                                <div class="percentage ml-4">
+                                    {{ bar_percentages.protocol_support }}%
+                                </div>
+                            </div>
+
+                            <div class="bar-wrapper w-full mb-4 flex items-center">
+                                <div class="label w-1/3">Key Exchange</div>
+                                <div class="bar w-2/3 bg-blue-200">
+                                    <div class="bar-fill bg-blue-500"
+                                        style="width: {{ bar_percentages.key_exchange }}%;"></div>
+                                </div>
+                                <div class="percentage ml-4">
+                                    {{ bar_percentages.key_exchange }}%
+                                </div>
+                            </div>
+
+                            <div class="bar-wrapper w-full mb-4 flex items-center">
+                                <div class="label w-1/3">Cipher Strength</div>
+                                <div class="bar w-2/3 bg-blue-200">
+                                    <div class="bar-fill bg-blue-500"
+                                        style="width: {{ bar_percentages.cipher_strength }}%;"></div>
+                                </div>
+                                <div class="percentage ml-4">
+                                    {{ bar_percentages.cipher_strength }}%
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <h2>Certificate Details</h2>
-            <table>
-                <tr>
-                    <th>Issuer Name</th>
-                    <td>{{ issuer }}</td>
-                </tr>
-                <tr>
-                    <th>Subject</th>
-                    <td>{{ subject }}</td>
-                </tr>
-                <tr>
-                    <th>Valid From</th>
-                    <td>{{ not_before }}</td>
-                </tr>
-                <tr>
-                    <th>Valid Until</th>
-                    <td>{{ not_after }}</td>
-                </tr>
-                <tr>
-                    <th>Key Size</th>
-                    <td>{{ key_size }} bits</td>
-                </tr>
-                <tr>
-                    <th>Signature Algorithm</th>
-                    <td>{{ signature_algorithm }}</td>
-                </tr>
-                <tr>
-                    <th>Serial Number</th>
-                    <td>{{ serial_number }}</td>
-                </tr>
-                <tr>
-                    <th>Version</th>
-                    <td>{{ protocol_version }}</td>
-                </tr>
-            </table>
+        <!--Certifcate Details:  -->
 
-            <h2>Warnings</h2>
-            <div class="warning-section">
-                <table>
-                    <tbody>
-                        {% for warning in warnings %}
-                            <tr>
-                                <td>{{ warning }}</td>
+        <section class="container mx-auto py-12">
+            <h2 class="text-3xl font-bold text-center mb-8 py-3">
+                Certificate Details
+            </h2>
+
+            <div class="flex justify-center">
+                <div class="w-full max-w-2xl bg-white p-6 rounded-lg shadow-md mb-5">
+                    <table class="min-w-full divide-y divide-gray-300 border border-gray-300">
+                        <tbody class="bg-white">
+                            <tr class="bg-gray-50">
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-300">
+                                    Issuer Name
+                                </th>
+                                <td class="px-6 py-3 text-sm text-gray-900 border border-gray-300">
+                                    {{ issuer }}
+                                </td>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                            <tr>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-300">
+                                    Subject
+                                </th>
+                                <td class="px-6 py-3 text-sm text-gray-900 border border-gray-300">
+                                    {{ subject }}
+                                </td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-300">
+                                    Valid From
+                                </th>
+                                <td class="px-6 py-3 text-sm text-gray-900 border border-gray-300">
+                                    {{ not_before }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-300">
+                                    Valid Until
+                                </th>
+                                <td class="px-6 py-3 text-sm text-gray-900 border border-gray-300">
+                                    {{ not_after }}
+                                </td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-300">
+                                    Key Size
+                                </th>
+                                <td class="px-6 py-3 text-sm text-gray-900 border border-gray-300">
+                                    {{ key_size }} bits
+                                </td>
+                            </tr>
+                            <tr>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-300">
+                                    Signature Algorithm
+                                </th>
+                                <td class="px-6 py-3 text-sm text-gray-900 border border-gray-300">
+                                    {{ signature_algorithm }}
+                                </td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-300">
+                                    Serial Number
+                                </th>
+                                <td class="px-6 py-3 text-sm text-gray-900 border border-gray-300">
+                                    {{ serial_number }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-300">
+                                    Version
+                                </th>
+                                <td class="px-6 py-3 text-sm text-gray-900 border border-gray-300">
+                                    {{ protocol_version }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <!-- Download Button -->
-            <button class="button" id="download-report-btn" style="margin-top: 20px;">Download Report as Image</button>
-        {% endif %}
-    </div>
+            <div class="px-3 py-2 border-bottom mb-3"></div>
+        </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script>
-        document.getElementById('download-report-btn').addEventListener('click', function () {
-            html2canvas(document.getElementById('analysis-report')).then(function (canvas) {
-                var link = document.createElement('a');
-                link.href = canvas.toDataURL("image/png");
-                link.download = 'analysis_report.png';
-                link.click();
+        <!-- Warning Section -->
+        {% for warning in warnings %}
+        <section class="container mx-auto py-12">
+            <h2 class="text-3xl font-bold text-center mb-8 py-3">Warnings</h2>
+
+            <div class="flex justify-center pb-4">
+                <div class="w-full max-w-2xl bg-white p-6 rounded-lg shadow-md">
+                    <div class="warning-section">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td class="border border-gray-500">{{ warning }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+       </section> 
+        {% endfor %}
+
+        <!-- Download Button -->
+        <div class="buttons flex justify-center mt-4 space-x-1">
+            <button class="button" id="download-report-btn">
+                Download Report as Image
+            </button>
+            <a href="{% url 'security_recommendations' %}" class="button">
+                View Recommendations
+            </a>
+        </div>
+        <div class="pt-4 px-3 py-2 border-bottom mb-3"></div>
+
+        {% endif %}
+
+        <!-- Footer -->
+
+        <div class="container">
+            <footer class="py-3 my-4">
+                <ul class="nav justify-content-center pb-3 mb-3">
+                    <li class="nav-item">
+                        <a href="{% url 'analyze_certificate' %}" class="nav-link px-2 text-muted">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'grading_system' %}" class="nav-link px-2 text-muted">About Grades</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'home' %}" class="nav-link px-2 text-muted">Logout</a>
+                    </li>
+                </ul>
+
+                <p class="text-center text-muted d-flex justify-content-center align-items-center">
+                    <i class="bi bi-shield-check" style="font-size: 1.5rem; margin-right: 8px"></i>
+                    © 2024 CertiScan
+                </p>
+            </footer>
+        </div>
+
+        <!-- Loads html2canvas library -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+        <!-- Take ss of html and render as img -->
+        <script>
+            document.getElementById('download-report-btn').addEventListener('click', function () {
+                html2canvas(document.getElementById('analysis-report')).then(function (canvas) {
+                    var link = document.createElement('a');
+                    link.href = canvas.toDataURL("image/png");
+                    link.download = 'analysis_report.png';
+                    link.click();
+                });
             });
-        });
-
-        // Show the analysis report when it is available
-        {% if grade %}
+            // Show the analysis report when it is available
+            {% if grade %}
             document.getElementById('analysis-report').style.display = 'block';
-        {% endif %}
-    </script>
-
+            {% endif %}
+        </script>
 </body>
+
 </html>
