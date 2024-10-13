@@ -1,0 +1,19 @@
+{
+  "name": "finalyearproject",
+  "version": "1.0.0",
+  "description": "- Python 3.12 \r - Django 3.x or later\r - pip (Python package installer)",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "build": "tailwindcss -i ./templates/input.css -o ./templates/style.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.13"
+  },
+  "dependencies": {
+    "apexcharts": "^3.54.0",
+    "flowbite": "^2.5.2"
+  }
+}
