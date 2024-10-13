@@ -5,47 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Security Recommendations</title>
     <style>
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', Arial, sans-serif;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 50px;
+            background: linear-gradient(135deg, #4a90e2, #4a65d4); /* Gradient background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+            padding: 40px;
+            border-radius: 15px;
             text-align: center;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Shadow for depth */
         }
 
         h1 {
-            font-size: 40px;
-            color: #4a90e2;
+            font-size: 42px;
+            color: #000;
+            margin-bottom: 20px;
+            letter-spacing: 1.5px;
+            font-weight: bold;
         }
 
         p {
             font-size: 18px;
-            color: #333;
+            color: #000;
             margin-top: 20px;
+            line-height: 1.6;
         }
 
         .back-button {
             margin-top: 30px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4a90e2;
-            color: white;
+            padding: 15px 40px;
+            font-size: 18px;
+            background: linear-gradient(90deg, #4ca9d4, #4258b9);
+            color: #000;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
             text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
         }
 
         .back-button:hover {
-            background-color: #357abd;
+            background: linear-gradient(90deg, #2f6cce, #5b7acf);
+            box-shadow: 0 6px 20px rgba(33, 39, 214, 0.5);
         }
+
     </style>
 </head>
 <body>
-    <h1>SSL/TLS Grading System</h1>
-    <p>
-        upgrading to stronger cipher suites or renewing certificates
-    </p>
-
-    <a href="{% url 'analyze_certificate' %}" class="back-button">Back to Analyzer</a>
+    <div class="container">
+        <h1>Recommendations</h1>
+        <p>
+            It's important to upgrade to stronger cipher suites and regularly renew certificates to ensure the security and privacy of your website.
+        </p>
+        <a href="{% url 'analyze_certificate' %}" class="back-button">Back to Analyzer</a>
+    </div>
 </body>
 </html>
