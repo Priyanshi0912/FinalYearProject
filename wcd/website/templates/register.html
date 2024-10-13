@@ -1,12 +1,197 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Website Analysis</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', Arial, sans-serif;
+        }
 
+        body {
+            background: url("{% static 'images/bgimage2.jpg' %}") no-repeat center center fixed; /* Corrected path for the background image */
+            background-size: cover;
+            background-color: #726e68a3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
+        .register-container {
+            background-color: #beccfc;
+            padding: 60px;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            width: 700px;
+            text-align: center;
+        }
 
-<h1>Register</h1>
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}  <!-- Renders the form fields -->
-    <button type="submit">Register</button>
-</form>
-<p>Already have an account? <a href="{% url 'login_view' %}">Login here</a>.</p>
+        .register-box h2 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #171917;
+        }
 
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+            position: relative; /* Needed for the tooltip */
+        }
 
+        .input-group label {
+            font-size: 16px;
+            color: #171917;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            background-color: #484848;
+            color: #fff;
+            outline: none;
+        }
+
+        .input-group input::placeholder {
+            color: #b3d9ff;
+        }
+
+        .btn-register {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, #4ca9d4, #4258b9);
+            border: none;
+            border-radius: 10px;
+            color: #131212;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-register:hover {
+            background: linear-gradient(90deg, #2f6cce, #5b7acf);
+        }
+
+        .login-link {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #171917;
+        }
+
+        .login-link a {
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-link a:hover {
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Tooltip Styles */
+        .tooltip {
+            display: none; /* Initially hidden */
+            position: absolute;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            width: 250px;
+            z-index: 1;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Styled Info Icon */
+        .info-icon {
+            display: inline-block;
+            cursor: pointer;
+            font-size: 14px; /* Smaller font size */
+            color: #fff;
+            background-color: #000; /* Icon background color */
+            border-radius: 50%; /* Makes the icon circular */
+            width: 20px; /* Width of the icon */
+            height: 20px; /* Height of the icon */
+            text-align: center; /* Center the text */
+            line-height: 20px; /* Center the text vertically */
+            margin-left: 5px; /* Space between icon and input */
+            transition: background-color 0.3s ease;
+            font-style: italic; /* Italic style */
+            font-family: 'Brush Script MT', cursive;
+        }
+
+        .info-icon:hover {
+            background-color: #0095c8; /* Darker color on hover */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-box">
+            <h2>Register</h2>
+            <form action="{% url 'login_view' %}" method="POST">
+                <div class="input-group">
+                    <label for="username">Username:</label>
+                    <span class="info-icon" onclick="toggleTooltip('username-tooltip')">i</span> <!-- Info icon with onclick event -->
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                    
+                    <div class="tooltip" id="username-tooltip">
+                        <strong>Username Requirements:</strong><br>
+                        - Required. 150 characters or fewer.<br>
+                        - Letters, digits and @/./+/-/_ only.
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password:</label>
+                    <span class="info-icon" onclick="toggleTooltip('password-tooltip')">i</span> <!-- Info icon with onclick event -->
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    
+                    <div class="tooltip" id="password-tooltip">
+                        <strong>Password Requirements:</strong><br>
+                        - At least 8 characters<br>
+                        - Cannot be similar to personal information<br>
+                        - Cannot be a commonly used password<br>
+                        - Cannot be entirely numeric
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="password-confirm">Password confirmation:</label>
+                    <input type="password" id="password-confirm" name="password-confirm" placeholder="Confirm your password" required>
+                    
+                    
+                </div>
+                <button type="submit" class="btn-register">Register</button>
+                <p class="login-link">Already have an account? <a href="{% url 'login_view' %}">Login here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function toggleTooltip(tooltipId) {
+            var tooltip = document.getElementById(tooltipId);
+            // Toggle the display of the tooltip
+            if (tooltip.style.display === "none" || tooltip.style.display === "") {
+                tooltip.style.display = "block"; // Show tooltip
+            } else {
+                tooltip.style.display = "none"; // Hide tooltip
+            }
+        }
+    </script>
+</body>
+</html>
