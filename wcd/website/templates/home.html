@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,67 +7,136 @@
     <title>Home - Website Analysis</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Poppins', Arial, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
             align-items: center;
             height: 100vh;
-            background-color: #f5f5f5;
+            background: url("{% static 'images/bgimage2.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            background-color: #726e68a3; 
         }
 
         .container {
             text-align: center;
-            background-color: #ffffff;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            background-color: #beccfc;
+            padding: 30px;
+            border-radius: 18px;
+            border-color: #050505;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            max-width: 650px;
+            opacity: 0;
+            transform: translateY(50px); /* Move down by 50px initially */
+            animation: fadeInUp 1.5s ease-out forwards; /* 1.5s animation */
+            margin-right: 50px;
         }
 
+        @keyframes fadeInUp {
+          0%{
+           opacity: 0;
+           transform: translateY(50px); /* Start 50px down */
+           }
+          100% {
+          opacity: 1;
+          transform: translateY(0); /* End at the original position */
+          } 
+        }
+
+
         h1 {
-            font-size: 50px;
+            font-size: 48px;
             font-weight: bold;
-            color: #3471b1;
-            margin-bottom: 30px;
-            font-family: 'Courier New', Courier, monospace; /* Stylish font */
-            letter-spacing: 2px;
+            color: #171917; 
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            letter-spacing: 1.5px;
         }
 
         p {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 40px;
+            font-size: 20px;
+            color: z#484849;
+            margin-bottom: 50px;
+            font-family: 'Courier New', Courier, monospace;
         }
 
         .analyze-button {
-            padding: 15px 30px;
-            font-size: 20px;
-            color: #ffffff;
-            background-color: #a2195b;
+            padding: 15px 40px;
+            font-size: 22px;
+            color: #131212;
+            background: linear-gradient(90deg, #4ca9d4, #4258b9); 
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             text-decoration: none;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-family: 'Courier New', Courier, monospace;
         }
 
         .analyze-button:hover {
-            background-color: #750606;
+            background: linear-gradient(90deg, #2f6cce, #5b7acf);
+            box-shadow: 0 4px 15px rgba(33, 39, 214, 0.5);
         }
+
+        .info-section {
+            margin-top: 40px;
+            text-align: left;
+        }
+
+        .info-section h2 {
+            font-size: 32px;
+            color: #050505; 
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .info-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-section li {
+            font-size: 20px;
+            color: #494848;
+            margin-bottom: 10px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        
     </style>
 </head>
 <body>
 
+
+
 <div class="container">
-    <h1>Analyze Your Website Today</h1>
-    <p>Get instant insights into your website's SSL/TLS security.</p>
-    <a href="{% url 'analyze_certificate' %}" class="analyze-button">Start Analysis</a>
+    <h1>Welcome to Website Analysis</h1>
 
+    {% if user.is_authenticated %}
+        <p>You are logged in as {{ user.username }}.</p>
+        <a href="/analyze/" class="analyze-button"><b>Start Analysis</b></a>
+        <a href="{% url 'logout_view' %}" class="analyze-button">Logout</a> 
+    {% else %}
+        <p>Please log in to continue.</p>
+        <a href="{% url 'login_view' %}" class="analyze-button">Login</a>
+        <a href="{% url 'register_view' %}" class="analyze-button">Register</a>
+    {% endif %}
 
-    
+    <!-- Additional content -->
+    <div class="info-section">
+        <h2>Why Use Our Tool?</h2>
+        <ul>
+            <li>✔ <strong>Comprehensive SSL/TLS security checks</strong></li>
+            <li>✔ <strong>Fast and easy-to-use interface</strong></li>
+            <li>✔ <strong>Up-to-date vulnerability scanning</strong></li>
+            <li>✔ <strong>Detailed analysis report with recommendations</strong></li>
+        </ul>
+    </div>
 </div>
 
 </body>
 </html>
+
 

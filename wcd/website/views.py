@@ -1,7 +1,7 @@
 
 
 
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 import ssl
 import socket
@@ -11,13 +11,67 @@ from datetime import datetime, timezone
 from django.utils.timezone import make_aware
 import re
 
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import UserCreationForm
+
 
 def home(request):
     return render(request, 'home.html')
 
+from django.contrib.auth import logout
+
+def logout_view(request):
+    logout(request)
+    messages.success(request, 'You have been logged out.')
+    return redirect('home')  # Redirect to home page after logout
 
 def grading_system(request):
     return render(request, 'grading_system.html')
+
+
+
+
+
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('analyze_certificate')  # Redirect to the analysis page after successful login
+        else:
+            # Handle invalid login (e.g., show an error message)
+            return render(request, 'login.html', {'error': 'Invalid credentials'})
+
+    return render(request, 'login.html')
+
+
+
+
+
+
+def register_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)  # Create a form instance with POST data
+        if form.is_valid():  # Check if the form is valid
+            form.save()  # Save the new user
+            messages.success(request, 'Registration successful! You can now log in.')  # Optional success message
+            return redirect('login_view')  # Redirect to the login page after successful registration
+    else:
+        form = UserCreationForm()  # Create a blank form for GET requests
+
+    return render(request, 'register.html', {'form': form})
+
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 
 def security_recommendations(request):
