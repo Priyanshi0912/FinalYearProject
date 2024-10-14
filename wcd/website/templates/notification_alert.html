@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Alerts</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            margin-bottom: 20px;
+        }
+        .switch input { display: none; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .slider.round {
+            border-radius: 34px;
+        }
+        .slider.round:before {
+            border-radius: 50%;
+        }
+        .explanation {
+            text-align: center;
+            font-size: 16px;
+            color: #333;
+            margin-top: 10px;
+        }
+        .on-message {
+            display: none;
+            color: green;
+        }
+        .off-message {
+            display: none;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Notification Alerts System</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <label class="switch">
+                <input type="checkbox" name="toggle" onchange="this.form.submit()" {% if notification_settings.alerts_on %} checked {% endif %}>
+                <span class="slider round"></span>
+            </label>
+            <p>{{ notification_settings.alerts_on|yesno:"Alerts are ON,Alerts are OFF" }}</p>
+
+            <div class="explanation">
+                {% if notification_settings.alerts_on %}
+                    <p class="on-message" style="display: block;">
+                        You have enabled alerts because you want to stay updated with important notifications from WCD.
+                        We will send you timely information and alerts based on your preferences.
+                    </p>
+                {% else %}
+                    <p class="off-message" style="display: block;">
+                        You have disabled alerts, meaning you will not receive any further notifications.
+                        Turn on alerts if you want to stay informed.
+                    </p>
+                {% endif %}
+            </div>
+        </form>
+        <a href="{% url 'analyze_certificate' %}" ><b>Back to Analyzer</b></a>
+    </div>
+
+    
+</body>
+</html>

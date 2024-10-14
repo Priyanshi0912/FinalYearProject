@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,43 +10,285 @@
             font-family: Arial, sans-serif;
             margin: 50px;
             text-align: center;
+            background: url("{% static 'images/bgimage3.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
         }
 
         h1 {
-            font-size: 40px;
-            color: #4a90e2;
+            font-size: 45px;
+            color: #fafbfc;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        u{
+            color: aliceblue;
+        }
+
+        h2{
+            color: #050505;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            text-align: center;
+            font-size: 20px;
         }
 
         p {
-            font-size: 18px;
-            color: #333;
-            margin-top: 20px;
+            font-size: 22px;
+            color: #f9f7f7;
+            margin-top: 17px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            text-align: justify;
         }
 
+        .p2{
+            font-size: 18px;
+            color: #070000;
+            margin-top: 20px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            text-align: left;
+            border-radius: 8px;
+            border-color: #050505;
+        }
+
+        .container1 {
+            background-color: #beccfc;
+            padding: 20px;
+            border-radius: 8px;
+            border-color: #050505;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            max-width: 1000px;
+            opacity: 0;
+            transform: translateY(50px); /* Move down by 50px initially */
+            animation: fadeInUp 1.5s ease-out forwards; /* 1.5s animation */
+            margin: 0 auto;
+        }
+        .container2 {
+            background-color: #beccfc;
+            padding: 20px;
+            border-radius: 8px;
+            border-color: #050505;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            max-width: 1000px;
+            opacity: 10;
+            transform: translateY(50px); /* Move down by 50px initially */
+            animation: fadeInUp 1.5s ease-out forwards; /* 1.5s animation */
+            margin: 0 auto;
+        }
+
+        @keyframes fadeInUp {
+          0%{
+           opacity: 0;
+           transform: translateY(50px); /* Start 50px down */
+           }
+          100% {
+          opacity: 1;
+          transform: translateY(0); /* End at the original position */
+          } 
+        }
+
+
         .back-button {
-            margin-top: 30px;
+            margin-bottom: 10px;
             padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4a90e2;
-            color: white;
-            border: none;
-            border-radius: 5px;
+            font-size: 20px;
+            background-color: #f2f5f7;
+            color: rgb(3, 5, 7);
+            border: black;
+            border-radius: 10px;
             cursor: pointer;
             transition: background-color 0.3s ease;
             text-decoration: none;
+            font-family: 'Courier New', Courier, monospace;
         }
 
         .back-button:hover {
-            background-color: #357abd;
+            background-color: #beccfc;
         }
+
+        table{ 
+            background-color: #beccfc;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            text-align: center;
+            margin: 0 auto;
+            font-size: 20px;
+        }
+        .navbar {
+            background-color: transparent; /* Make navbar transparent */
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+        }
+
+        .navbar a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: underline; /* Add underline to the text */
+            text-align: center;
+            font-size: 23px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            transition: background-color 0.3s ease, color 0.3s ease; /* Added color transition */
+        }
+
+        .navbar a:hover {
+           background-color:#beccfc; /* Slightly transparent background on hover */
+           color: rgb(8, 8, 8); /* Keep the text color white */
+        }
+
     </style>
 </head>
 <body>
-    <h1>SSL/TLS Grading System</h1>
-    <p>
-        The SSL/TLS Grading System is based on various factors, including certificate expiration, key length, algorithm strength, and adherence to modern security practices...
-    </p>
+    
 
-    <a href="{% url 'analyze_certificate' %}" class="back-button">Back to Analyzer</a>
+    <b><u> <h1>SSL/TLS GRADING SYSTEM</h1></u></b>
+     
+    <p>
+       The SSL/TLS grading system evaluates the security of encrypted connections by analyzing key factors such as
+         certificate expiration, key length, algorithm strength, and compliance with modern security standards. 
+         By assessing these elements, the grading system helps ensure that websites maintain robust encryption protocols, 
+        safeguarding user data and adhering to the latest cybersecurity practices.
+    </p>
+    <br><br>
+    <div class="navbar">
+        <a href="#validityPeriod"><b>Validity Period</b></a>
+        <a href="#signatureAlgorithm"><b>Signature Algorithm</b></a>
+        <a href="#grading"><b>Grading</b></a>
+        <a href="#sslTlsCertificate"><b>SSL/TLS Certificate Version</b></a>
+    </div>
+    
+    <br><br><br>
+    <div id="validityPeriod">
+    <div class="container2">
+        <h2> Certificate Validity Period </h2>
+        <div class="container2">
+            <div class="p2">
+               <b> SSL certificates are crucial for secure websites, but they come with a limited validity period. Here's what you need to know:</b>
+               <br>
+               <ul>
+                <li><strong>Maximum Validity:</strong> SSL certificates are valid for up to 398 days. This ensures that security standards remain up-to-date and minimizes the risk of compromised keys.</li>
+                <li><strong>Signed by a trusted certificate authority (CA):</strong> Be signed by a trusted certificate authority (CA), either a trusted public CA for externally facing applications or an internal CA for internal applications. Don’t flag internal applications as untrusted just because your system doesn’t recognize the CA.</li>
+                <li><strong>Expired Certificates:</strong> If your SSL certificate expires, browsers will flag your site as "not secure," damaging user trust and affecting your site’s functionality.</li>
+                <li><strong>Subject Alternative Name (SAN) Requirements:</strong> Have a Subject Alternative Name (SAN) matching the system's hostname, as modern browsers ignore the Common Name (CN). Ensure you access the system using the correct name; accessing by IP will cause the certificate to appear untrusted.</li>
+            </ul>
+                Always monitor your SSL certificate expiration and renew it promptly to maintain a secure, trusted site for your users.
+            </div>
+          </div> 
+       </div>
+    </div>
+
+    <br><br><br>
+
+    <div id="signatureAlgorithm">
+    <div class="container1">
+        <h2> Signature Algorithm and Key Size</h2>
+        <div class="container1">
+        <div class="p2">
+            <p2>When it comes to SSL/TLS certificate security, the choice of signature algorithm and key size plays a critical role in ensuring your data remains safe from attacks. 
+        <br>
+        <strong>Algorithms for Secure SSL/TLS Configurations: </strong>
+        <ul>
+            <li><strong>RSA (2048-bit or higher)</strong>: For compatibility with legacy systems, RSA is still widely used, but ensure the key size is at least 2048 bits to maintain adequate security.</li>
+            <li><strong>ECDSA</strong>: For better performance and stronger security, prioritize using ECDSA over RSA wherever possible, especially in modern environments.</li>
+            <li><strong>EdDSA</strong>: Consider EdDSA for high efficiency and strong security with smaller key sizes, especially in resource-constrained environments.</li>
+            <li><strong>SHA-256/SHA-3</strong>: Ensure that certificates use secure hashing functions like SHA-256 or SHA-3. Avoid weaker hash functions like SHA-1 and MD5, which are no longer secure.</li>
+        </ul>
+        
+        <strong>Grading and Evaluation of SSL/TLS Certificates</strong><br>
+        For each certificate analyzed, assign a grade based on its security:
+        <ul>
+            <li><strong>Grade A</strong>: Modern algorithms like ECDSA with secure elliptic curves and SHA-256/SHA-3.</li>
+            <li><strong>Grade B</strong>: RSA (2048-bit) without modern algorithms like ECDSA or EdDSA.</li>
+            <li><strong>Grade C-F</strong>: Weaker algorithms, deprecated methods like DSA, or vulnerable hash functions like SHA-1 or MD5.</li>
+        </ul>
+
+        <strong>Real-Time Monitoring and Automation</strong>
+        For an added layer of security, implement real-time monitoring for SSL/TLS certificates, allowing for automatic detection of changes in the certificate setup and continuous scanning of multiple hosts. 
+        <br>
+        </p2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br><br><br>
+    
+    <div id="grading">
+    <table border="1" cellpadding="10" cellspacing="0" >
+        <thead>
+            <tr>
+                <th>Grade</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>A Grade</strong></td>
+                <td>Top-notch security practices with no significant vulnerabilities.</td>
+            </tr>
+            <tr>
+                <td><strong>B Grade</strong></td>
+                <td>Secure but could improve by adopting newer standards or addressing minor gaps.</td>
+            </tr>
+            <tr>
+                <td><strong>C Grade</strong></td>
+                <td>Reasonably secure but with noticeable weaknesses or outdated configurations.</td>
+            </tr>
+            <tr>
+                <td><strong>D Grade</strong></td>
+                <td>Poor security with significant gaps that need to be addressed urgently.</td>
+            </tr>
+            <tr>
+                <td><strong>F Grade</strong></td>
+                <td>Critical security issues that leave the website exposed to major attacks.</td>
+            </tr>
+          </tbody>
+      </table>
+  </div>
+
+    <br><br><br>
+
+    <div id="sslTlsCertificate">
+    <div class="container2">
+        <h2> SSL/TLS Certificate Version</h2>
+            <div class="container2">
+                 <div class="p2">
+                    SSL (Secure Sockets Layer) and TLS (Transport Layer Security) are essential protocols for securing internet communications. Different versions: 
+                    <ol>
+                        <li>
+                            <strong>SSLv2</strong><br>
+                            The first widely adopted protocol, SSLv2, is now deprecated due to significant security vulnerabilities and is not suitable for protecting sensitive data.
+                        </li>
+                        <li>
+                            <strong>SSLv3</strong><br>
+                            SSLv3 improved upon SSLv2 but is also insecure, with vulnerabilities such as POODLE attacks. Its use is not recommended.
+                        </li>
+                        <li>
+                            <strong>TLS 1.0</strong><br>
+                            Replacing SSLv3, TLS 1.0 introduced stronger encryption but is now considered outdated and has multiple known vulnerabilities.
+                        </li>
+                        <li>
+                            <strong>TLS 1.1</strong><br>
+                            TLS 1.1 addressed some TLS 1.0 vulnerabilities and introduced new features but is also outdated and no longer secure.
+                        </li>
+                        <li>
+                            <strong>TLS 1.2</strong><br>
+                            Currently the most widely supported version, TLS 1.2 includes significant security improvements and is resistant to many attacks, making it the recommended protocol for modern web applications.
+                        </li>
+                        <li>
+                            <strong>TLS 1.3</strong><br>
+                            TLS 1.3 offers substantial enhancements over TLS 1.2, providing better privacy, faster connections, and improved security against downgrade attacks.
+                        </li>
+                    </ol>
+                    <strong>Choosing the Right Certificate:</strong>
+                    When selecting an SSL/TLS certificate, ensure it supports your desired protocol version. TLS 1.2 remains secure, but TLS 1.3 is advisable for enhanced security.
+                    <br>
+                    <strong>Stay Informed:</strong>
+                    Keep updated with security advisories from trusted sources like NIST and IETF to ensure your applications remain secure.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br><br><br>
+    <a href="{% url 'analyze_certificate' %}" class="back-button"><b>Back to Analyzer</b></a>
+
 </body>
 </html>
