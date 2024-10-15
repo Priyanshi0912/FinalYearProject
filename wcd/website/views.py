@@ -10,13 +10,13 @@ from cryptography.hazmat.backends import default_backend
 from datetime import datetime, timezone
 from django.utils.timezone import make_aware
 import re
-
+from django.core.mail import send_mail
+from django.conf import settings
+from .models import NotificationSettings
 from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
-
+from .models import AnalyzedURL
 
 def home(request):
     return render(request, 'home.html')
@@ -30,10 +30,6 @@ def logout_view(request):
 
 def grading_system(request):
     return render(request, 'grading_system.html')
-
-
-
-
 
 
 def login_view(request):
@@ -50,9 +46,6 @@ def login_view(request):
             return render(request, 'login.html', {'error': 'Invalid credentials'})
 
     return render(request, 'login.html')
-
-
-
 
 
 
@@ -244,7 +237,7 @@ def grade_certificate(overall_score):
     else:  # overall_score >= 80
         return 'A'
 
-
+from .models import AnalyzedURL 
 # View to analyze the SSL certificate
 def analyze_certificate(request):
     if request.method == 'POST':
@@ -314,6 +307,9 @@ def analyze_certificate(request):
                 'grade': grade,
                 'overall_score': overall_score,
             }
+            if request.user.is_authenticated:
+                AnalyzedURL.objects.create(user=request.user, url=hostname, grade=grade) 
+            
 
             return render(request, 'analyze.html', details)
         except ssl.SSLError as e:
@@ -327,3 +323,60 @@ def analyze_certificate(request):
         
 
     return render(request, 'analyze.html')
+
+
+
+def analyzed_urls(request):
+    if request.user.is_authenticated:
+        urls = AnalyzedURL.objects.filter(user=request.user).order_by('-date_analyzed')
+        return render(request, 'analyzed_urls.html', {'urls': urls})
+    else:
+        return redirect('login_view')
+
+
+    
+
+
+
+def send_email_view(request):
+    if request.method == 'POST':
+        # Get the form data from POST request
+        subject = request.POST['subject']
+        message = request.POST['message']
+        recipient = request.POST['recipient']
+        
+        # Send the email using the send_mail function
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [recipient])
+        
+        # Return a simple success message
+        return HttpResponse('Email sent successfully!')
+
+    # Render the email form HTML page
+    return render(request, 'send_email.html')
+
+
+
+def notification_alert(request):
+    # Retrieve or create notification settings for the current user
+    notification_settings, created = NotificationSettings.objects.get_or_create(user=request.user)
+    
+    if request.method == 'POST':
+        if 'toggle' in request.POST:
+            # Toggle the alert status
+            notification_settings.alerts_on = not notification_settings.alerts_on
+            notification_settings.save()
+            
+            # Send email if alerts are on
+            if notification_settings.alerts_on:
+                subject = 'ALERT FROM WCD'
+                message = 'RENEW YOUR CERTIFICATE NOW'
+                recipient = 'priyanshi@rknec.edu'
+        
+        # Send the email using the send_mail function
+                send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [recipient])
+                
+            messages.success(request, "Alerts have been turned ON and a notification email has been sent.")
+        else:
+            messages.success(request, "Alerts have been turned OFF.")
+    
+    return render(request, 'notification_alert.html', {'notification_settings': notification_settings})
