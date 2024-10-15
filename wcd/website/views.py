@@ -333,17 +333,12 @@ def analyzed_urls(request):
     else:
         return redirect('login_view')
 
-
-    
-
-
-
 def send_email_view(request):
     if request.method == 'POST':
         # Get the form data from POST request
         subject = request.POST['subject']
         message = request.POST['message']
-        recipient = request.POST['recipient']
+        recipient = 'priya9nshi12@gmail.com'
         
         # Send the email using the send_mail function
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [recipient])
@@ -353,8 +348,6 @@ def send_email_view(request):
 
     # Render the email form HTML page
     return render(request, 'send_email.html')
-
-
 
 def notification_alert(request):
     # Retrieve or create notification settings for the current user
