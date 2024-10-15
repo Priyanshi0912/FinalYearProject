@@ -83,7 +83,53 @@ http://127.0.0.1:8000
 
 ## Project Structure
 
+Project Structure:
 ```
-
-
+├── FinalYearProject/
+│   ├── node_modules/
+│   ├── virt/
+│   │   ├── Include/
+│   │   ├── Lib/
+│   │   ├── Scripts/
+│   │   └── pyvenv.cfg
+│   ├── wcd/
+│   │   ├── static/
+│   │   │   ├── staticfiles/
+│   │   │   │   ├── admin/
+│   │   │   │   │   ├── css/
+│   │   │   │   │   ├── img/
+│   │   │   │   │   └── js/
+│   │   ├── __pycache__/
+│   │   ├── __init__.py
+│   │   ├── asgi.py
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   └── wsgi.py
+├── website/
+│   ├── __pycache__/
+│   ├── migrations/
+│   ├── templates/
+│   │   ├── analyze.html
+│   │   ├── analyzed_urls.html
+│   │   ├── grading_system.html
+│   │   ├── home.html
+│   │   ├── login.html
+│   │   ├── notification_alert.html
+│   │   ├── recommendations.html
+│   │   ├── register.html
+│   │   └── send_email.html
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── manage.py
+├── mydb.py
+├── package-lock.json
+├── package.json
+├── README.md
+└── tailwind.config.js
 ```
