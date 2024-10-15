@@ -159,7 +159,7 @@ EMAIL_HOST = 'smtp.gmail.com'  # For Gmail
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'priya9nshi12@gmail.com'  # Your email address
-EMAIL_HOST_PASSWORD = 'yfyp xrbe rsym hyzo'  # Your email password
+EMAIL_HOST_PASSWORD = ''  # Your email password
 DEFAULT_FROM_EMAIL = 'priya9nshi12@gmail.com'
 
 # import os
