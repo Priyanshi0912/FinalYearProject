@@ -12,4 +12,7 @@ urlpatterns = [
     path('analyzed-urls/', views.analyzed_urls, name='analyzed_urls'),
     path('send_email_view/', views.send_email_view, name='send_email_view'),
     path('notification_alert/', views.notification_alert, name='notification_alert'),
+    path('disclaimer/', views.disclaimer_view, name='disclaimer'),
+    path('copyright/', views.copyright_view, name='copyright'),
+    path('about/', views.about_view, name='about'),
 ]

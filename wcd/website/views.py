@@ -373,3 +373,15 @@ def notification_alert(request):
             messages.success(request, "Alerts have been turned OFF.")
     
     return render(request, 'notification_alert.html', {'notification_settings': notification_settings})
+
+
+def disclaimer_view(request):
+    return render(request, 'disclaimer.html')
+
+# View for the Copyright Page
+def copyright_view(request):
+    return render(request, 'copyright.html')
+
+# View for the About Us page
+def about_view(request):
+    return render(request, 'about.html')
