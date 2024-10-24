@@ -72,6 +72,7 @@
 <body>
     <div class="container">
         <h2>Notification Alerts System</h2>
+        <h3>We can alert you instantly via email if your SSL certificate stops working on your domain.</h3>
         <form method="POST">
             {% csrf_token %}
             <label class="switch">
@@ -81,6 +82,7 @@
             <p>{{ notification_settings.alerts_on|yesno:"Alerts are ON,Alerts are OFF" }}</p>
 
             <div class="explanation">
+                
                 {% if notification_settings.alerts_on %}
                     <p class="on-message" style="display: block;">
                         You have enabled alerts because you want to stay updated with important notifications from WCD.

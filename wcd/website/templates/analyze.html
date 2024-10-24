@@ -183,7 +183,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css"
         rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
+    <!-- <link rel="stylesheet" href="style.css" /> -->
 </head>
 
 <body>
@@ -259,10 +259,13 @@
                                     Logout
                                 </a>
                             </li>
+ 
+                            
                         </ul>
                     </div>
                 </div>
             </div>
+           
         </header>
 
         <!-- Hero Section -->
@@ -510,6 +513,21 @@
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'home' %}" class="nav-link px-2 text-muted">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'send_email_view' %}" class="nav-link px-2 text-muted">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'home' %}" class="nav-link px-2 text-muted">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'disclaimer' %}" class="nav-link px-2 text-muted">Disclaimer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'about' %}" class="nav-link px-2 text-muted">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'copyright' %}" class="nav-link px-2 text-muted">Copyright</a>
                     </li>
                 </ul>
 
