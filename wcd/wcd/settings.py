@@ -166,8 +166,4 @@ DEFAULT_FROM_EMAIL = 'priya9nshi12@gmail.com'
 
 # import os
 
-<<<<<<< HEAD
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') 
-=======
-# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') 
->>>>>>> upstream/main
+#EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') 
