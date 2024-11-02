@@ -1,34 +1,74 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analyzed URLs</title>
+    <title>History of Analyzed URLs</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%); 
             margin: 0;
             padding: 20px;
+            color: #333;
+            overflow-x: hidden;
+            
+        }
+
+        header {
+            position: fixed;
+            /* Ensuring navbar is fixed */
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            /* Higher z-index to stay above other elements */
+        }
+
+        .header-text{
+            margin-top: 30px;
         }
 
         h1 {
-            color: #ff6347; /* Tomato color */
+            color: #041324;
             text-align: center;
-            margin-bottom: 30px;
+            font-size: 2em;
+            margin: 40px 0 20px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .history-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+            position: relative;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* Search bar styling */
+        .search-bar {
+            width: 97%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 1em;
         }
 
         table {
-            width: 80%;
-            margin: 0 auto;
+            width: 100%;
             border-collapse: collapse;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: #ffffff;
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         thead {
-            background-color: #ff6347; /* Tomato color for heading */
+            background-color: #041324;
             color: white;
         }
 
@@ -38,73 +78,298 @@
             border-bottom: 1px solid #ddd;
         }
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9; /* Light gray for alternating rows */
+        th {
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        th {
-            font-size: 16px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
         }
 
         td {
-            font-size: 14px;
+            font-size: 0.95em;
+            color: #333;
         }
 
-    
-        
+        /* Icon and date styling */
+        .date-icon {
+            margin-right: 8px;
+            color: #4299e1;
+        }
 
-        /* Button Styling */
-        .back-button {
-            display: block;
-            margin: 20px auto;
+        /* Buttons styling */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            background-color: #041324;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #03172c;
+        }
+
+        /* Side panel for deleting history */
+        .side-panel {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .side-panel.active {
+            transform: translateX(0);
+        }
+
+        .side-panel h2 {
+            margin-top: 0;
+            font-size: 1.5em;
+            color: #8ec5fc;
+        }
+
+        .side-panel p {
+            font-size: 1em;
+            margin: 20px 0;
+        }
+
+        .side-panel button {
             padding: 10px 20px;
-            background-color: #476fa4;
+            background-color: #d9534f;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            font-size: 16px;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
         }
 
-     
+        .side-panel button:hover {
+            background-color: #c9302c;
+        }
 
+        /* Center the Back to Analyzer button */
+        .center-button {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
     </style>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css"
+        rel="stylesheet" />
+    
 </head>
 <body>
 
-    <h1>Analyzed URLs</h1>
-    <!-- Back Button -->
-    <a href="{% url 'analyze_certificate' %}" class="back-button">Analyze more URLS</a>
+    <header class="fixed top-0 left-0 w-full z-50">
+        <div class="px-3 py-2 text-bg-dark border-bottom">
+            <div class="container">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <a href="{% url 'home' %}"
+                        class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                            <use xlink:href="#bootstrap"></use>
+                        </svg>
+                        <i class="bi bi-shield-check" style="font-size: 2rem"></i>
+                        CertiScan
+                    </a>
 
-    <table>
-        <thead>
-            <tr>
-                <th>URL</th>
-                <th>Grade</th> 
-                <th>Date Analyzed</th>
-                
-            
-            </tr>
-        </thead>
-        <tbody>
-            {% for url in urls %}
-            <tr>
-                <td>{{ url.url }}</td>
-                <td>{{ url.grade }}</td>
-                <td>{{ url.date_analyzed }}</td>
-                
-                
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                    <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                        <li>
+                            <a href="{% url 'home' %}" class="nav-link text-white">
+                                <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                    <use xlink:href="#home"></use>
+                                </svg>
+                                <i class="bi bi-house-fill"></i>
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'notification_alert' %}" class="nav-link text-white">
+                                <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                    <use xlink:href="#envelope"></use> <!-- Use the envelope symbol for contact -->
+                                </svg>
+                                <i class="bi bi-bell-fill"></i> <!-- Bootstrap icon for envelope -->
+                                Notification
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'analyzed_urls' %}" class="nav-link text-white">
+                                <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                    <use xlink:href="#history"></use> <!-- Updated to use the history symbol -->
+                                </svg>
+                                <i class="bi bi-clock-history"></i> <!-- Bootstrap icon for history -->
+                                History
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="{% url 'grading_system'%}" class="nav-link text-white">
+                                <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                    <use xlink:href="#speedometer2"></use>
+                                </svg>
+                                <i class="bi bi-speedometer2"></i>
+                                About Grades
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'send_email_view' %}" class="nav-link text-white">
+                                <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                    <use xlink:href="#envelope"></use> <!-- Use the envelope symbol for contact -->
+                                </svg>
+                                <i class="bi bi-envelope-fill"></i> <!-- Bootstrap icon for envelope -->
+                                Contact
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'logout_view' %}" class="nav-link text-white">
+                                <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                    <use xlink:href="#people-circle"></use>
+                                </svg>
+                                <i class="bi bi-person"></i>
+                                Logout
+                            </a>
+                        </li>
 
-    
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+       
+    </header>
+    <br><br><br><br><br>
+
+    <h1>History of Analyzed URLs</h1>
+    <br> 
+    <div class="history-container">
+        <!-- Search bar -->
+        <input type="text" id="search-bar" class="search-bar" placeholder="Search History..." onkeyup="filterHistory()">
+
+        <!-- Control Buttons -->
+        <div class="button-container">
+            <button class="button" onclick="toggleSidePanel()">Delete History</button>
+            <button class="button" onclick="sortHistoryByDate()">Sort by Date</button>
+            <button class="button" onclick="groupHistoryByGrade()">Group by Grade</button>
+        </div>
+
+        <table id="history-table">
+            <thead>
+                <tr>
+                    <th>URL</th>
+                    <th>Grade</th> 
+                    <th>Date Analyzed</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for url in urls %}
+                <tr>
+                    <td>{{ url.url }}</td>
+                    <td>{{ url.grade }}</td>
+                    <td><span class="date-icon">&#x1F4C5;</span> {{ url.date_analyzed }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>        
+    </div>
+
+    <div class="center-button">
+        <a href="{% url 'analyze_certificate' %}" class="button">Back to Analyzer</a>
+    </div>
+
+    <!-- Side Panel for Deleting History -->
+    <div class="side-panel" id="side-panel">
+        <br><br> <br><br>
+        <h2>Delete History</h2>
+        <p>Are you sure you want to delete your history? This action cannot be undone.</p>
+        <button onclick="clearHistory()">Delete All History</button>
+    </div>
+
+    <script>
+        // Toggle side panel visibility
+        function toggleSidePanel() {
+            const sidePanel = document.getElementById('side-panel');
+            sidePanel.classList.toggle('active');
+        }
+
+        // Search history table
+        function filterHistory() {
+            const searchQuery = document.getElementById('search-bar').value.toLowerCase();
+            const table = document.getElementById('history-table');
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                let match = false;
+
+                for (const cell of cells) {
+                    if (cell && cell.textContent.toLowerCase().includes(searchQuery)) {
+                        match = true;
+                        break;
+                    }
+                }
+
+                rows[i].style.display = match ? '' : 'none';
+            }
+        }
+
+        // Sort history by date
+        function sortHistoryByDate() {
+            const table = document.getElementById('history-table').getElementsByTagName('tbody')[0];
+            const rows = Array.from(table.getElementsByTagName('tr'));
+
+            rows.sort((a, b) => {
+                const dateA = new Date(a.cells[2].textContent.trim());
+                const dateB = new Date(b.cells[2].textContent.trim());
+                return dateB - dateA; // Sort descending
+            });
+
+            rows.forEach(row => table.appendChild(row));
+        }
+
+        // Group history by grade
+        function groupHistoryByGrade() {
+            const table = document.getElementById('history-table').getElementsByTagName('tbody')[0];
+            const rows = Array.from(table.getElementsByTagName('tr'));
+
+            rows.sort((a, b) => {
+                const gradeA = a.cells[1].textContent.trim();
+                const gradeB = b.cells[1].textContent.trim();
+                return gradeA.localeCompare(gradeB); // Sort alphabetically by grade
+            });
+
+            rows.forEach(row => table.appendChild(row));
+        }
+
+        // Clear history table (demo version)
+        function clearHistory() {
+            const table = document.getElementById('history-table').getElementsByTagName('tbody')[0];
+            table.innerHTML = '<tr><td colspan="3" style="text-align:center;">History Cleared</td></tr>';
+            toggleSidePanel();
+        }
+    </script>
 
 </body>
 </html>
-
