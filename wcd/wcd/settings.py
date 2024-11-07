@@ -85,12 +85,13 @@ WSGI_APPLICATION = 'wcd.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "cipher",
         "USER": "root",
-        "PASSWORD":"12345",
+        "PASSWORD":"nida2003",
         "HOST":'localhost',
         "PORT":"3306",
 
@@ -131,6 +132,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
+import os
 
 STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -164,4 +166,4 @@ DEFAULT_FROM_EMAIL = 'priya9nshi12@gmail.com'
 
 # import os
 
-# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') 
+#EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') 
