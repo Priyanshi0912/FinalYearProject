@@ -216,6 +216,7 @@ def check_key_size(cert):
 #             return score
 
 
+
 def calculate_overall_score(protocol_score, key_score, cipher_score):
     overall_score = (0.3 * protocol_score) + (0.3 * key_score) + (0.4 * cipher_score)
     return overall_score
@@ -374,6 +375,22 @@ def notification_alert(request):
     
     return render(request, 'notification_alert.html', {'notification_settings': notification_settings})
 
+def contact_view(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        
+        # Prepare email
+        subject = f"Message from {name}"
+        full_message = f"Message from {name} ({email}):\n\n{message}"
+        
+        # Send email (customize settings.EMAIL_HOST_USER for sender)
+        send_mail(subject, full_message, settings.EMAIL_HOST_USER, [settings.EMAIL_RECEIVER])
+        messages.success(request, "Thank you! Your message has been sent.")
+        return redirect('contact')
+        
+    return render(request, 'contact.html')
 
 def disclaimer_view(request):
     return render(request, 'disclaimer.html')
