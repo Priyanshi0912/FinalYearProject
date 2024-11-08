@@ -1,0 +1,314 @@
+/*//////////////////////////////////////////////////////////////////
+[ FONT ]*/
+
+@font-face {
+    font-family: Montserrat-Regular;
+    src: url('../fonts/montserrat/static/Montserrat-Regular.ttf'); 
+  }
+  
+  @font-face {
+    font-family: Montserrat-Bold;
+    src: url('../fonts/montserrat/static/Montserrat-Bold.ttf'); 
+  }
+  
+  @font-face {
+    font-family: Montserrat-ExtraBold;
+    src: url('../fonts/montserrat/static/Montserrat-ExtraBold.ttf'); 
+  }
+  
+  @font-face {
+    font-family: Montserrat-Medium;
+    src: url('../fonts/montserrat/static/Montserrat-Medium.ttf'); 
+  }
+
+ 
+a{
+    font-family: Montserrat-Regular;
+}  
+  body, html {
+	height: 100%;
+	font-family: Montserrat-Regular, sans-serif;
+}
+
+h1, h2, h3, .header-text {
+    font-family: 'Montserrat-Bold', sans-serif;
+}
+
+.lead, .text-body-emphasis {
+    font-family: 'Montserrat-Medium', sans-serif;
+}
+
+p {
+	font-family: Montserrat-Regular;
+	font-size: 14px;
+	line-height: 1.7;
+	color: #666666;
+	margin: 0px;
+}
+
+body {
+
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0; 
+    background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+}
+
+header {
+    position: fixed;
+    /* Ensuring navbar is fixed */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    
+    /* Higher z-index to stay above other elements */
+}
+
+.header-text{
+    margin-top: 30px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #212529;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: Montserrat-Bold;
+}
+
+.button {
+    display: flex;
+    margin-top: 20px;
+    margin-right: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #041324;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.button:hover {
+    background-color: #03172c;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #212830;
+}
+
+input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #0b1827;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease;
+    font-family: Montserrat-Regular;
+}
+
+input[type="text"]:focus {
+    border-color: #111820;
+    outline: none;
+}
+
+.grade-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.grade-box {
+    background-color: #429ef4;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 48px;
+    font-weight: bold;
+    color: white;
+}
+
+.bar-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.label {
+    width: 30%;
+    padding-right: 10px;
+}
+
+.bar {
+    background-color: #e0f2fe;
+    border-radius: 5px;
+    height: 20px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.bar-fill {
+    background-color: #4299e1;
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.percentage {
+    width: 10%;
+    text-align: left;
+}
+
+.warning-section {
+    margin-top: 30px;
+    color: red;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: left;
+    font-family: Montserrat-Regular;
+}
+
+.table-header {
+    font-family: Montserrat-ExtraBold;
+    font-size: 18px;
+    background-color: #f2f2f2;
+}
+
+.form-container {
+    margin-bottom: 30px;
+}
+
+
+/* Navbar */
+.menu-icon {
+cursor: pointer;
+display: inline-block;
+margin-left: 20px;
+}
+
+.menu-icon .bar {
+display: block;
+width: 25px;
+height: 3px;
+margin: 5px auto;
+background-color: rgb(255, 255, 255);
+transition: all 0.3s;
+}
+
+/* Full-Screen Overlay */
+.overlay {
+position: fixed;
+height: 100%;
+width: 0;
+top: 0;
+left: 0;
+background-color: rgba(0, 0, 0, 0.9); /* Semi-transparent black */
+overflow-x: hidden;
+transition: width 0.5s;
+z-index: 1000;
+}
+
+.overlay-content {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+text-align: center;
+font-family: Montserrat-Medium;
+}
+
+.overlay-content a {
+display: block;
+color: white;
+font-size: 36px;
+padding: 10px;
+text-decoration: none;
+transition: color 0.3s;
+}
+
+.overlay-content a:hover {
+color: #f1f1f1;
+}
+
+/* Close button */
+.close-btn {
+position: absolute;
+top: 15px;
+right: 35px;
+font-size: 40px;
+background: none;
+border: none;
+color: white;
+cursor: pointer;
+transition: color 0.3s;
+}
+
+.close-btn:hover {
+color: #f1f1f1;
+}
+
+/* Transforming the hamburger menu to X */
+.menu-icon.open .bar:nth-child(1) {
+transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-icon.open .bar:nth-child(2) {
+opacity: 0;
+}
+
+.menu-icon.open .bar:nth-child(3) {
+transform: rotate(-45deg) translate(6px, -6px);
+}
+
+.warning-section {
+    font-family: Montserrat-Bold;
+    margin-top: 30px;
+    color: red;
+    font-weight: bold;
+}
