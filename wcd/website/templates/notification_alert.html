@@ -1,270 +1,165 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notification Alerts</title>
-    <style>
-        body {
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            margin: 50px;
-            text-align: center;
-            background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
-            background-size: cover
-        
-        } 
-       .container{
-            max-width: 800px;
-            margin: auto;
-            background-color: #beccfc;
-            padding: 20px;
-            Boeder-color: #050505;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-           
-        }
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-            margin-bottom: 20px;
-        }
-        .switch input { display: none; }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-        }
-        input:checked + .slider {
-            background-color: #2196F3;
-        }
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-        .slider.round {
-            border-radius: 34px;
-        }
-        .slider.round:before {
-            border-radius: 50%;
-        }
-        .explanation {
-            text-align: center;
-            font-size: 16px;
-            color: #333;
-            margin-top: 10px;
-        }
-        .on-message {
-            display: none;
-            color: green;
-        }
-        .off-message {
-            display: none;
-            color: red;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>Notification Alerts System</h2>
-        <h3>We can alert you instantly via email if your SSL certificate stops working on your domain.</h3>
-        <form method="POST">
-            {% csrf_token %}
-            <label class="switch">
-                <input type="checkbox" name="toggle" onchange="this.form.submit()" {% if notification_settings.alerts_on %} checked {% endif %}>
-                <span class="slider round"></span>
-            </label>
-            <p>{{ notification_settings.alerts_on|yesno:"Alerts are ON,Alerts are OFF" }}</p>
-
-            <div class="explanation">
-                
-                {% if notification_settings.alerts_on %}
-                    <p class="on-message" style="display: block;">
-                        You have enabled alerts because you want to stay updated with important notifications from WCD.
-                        We will send you timely information and alerts based on your preferences.
-                    </p>
-                {% else %}
-                    <p class="off-message" style="display: block;">
-                        You have disabled alerts, meaning you will not receive any further notifications.
-                        Turn on alerts if you want to stay informed.
-                    </p>
-                {% endif %}
-            </div>
-        </form>
-        <a href="{% url 'analyze_certificate' %}" ><b>Back to Analyzer</b></a>
-    </div>
-
-    
-</body>
-</html> -->
-
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Notifications</title>
-  </head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notification Alerts</title>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap");
 
-* {
-  box-sizing: border-box;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-html {
-  font-size: 6.25vmax;
-}
+    html {
+      font-size: 6.25vmax;
+    }
 
-@media (max-width: 992px) {
-  html {
-    font-size: 60px;
-  }
-}
+    @media (max-width: 992px) {
+      html {
+        font-size: 60px;
+      }
+    }
 
-body {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #333;
-  font-size: 0.3rem;
-  font-family: "Space Grotesk", sans-serif;
-  position: relative;
-  overflow: hidden;
-  background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%) ;
-}
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+      font-size: 0.3rem;
+      font-family: "Space Grotesk", sans-serif;
+      position: relative;
+      overflow: hidden;
+      background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+    }
 
-.bg-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
+    .bg-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
 
-.bg-container .bg-1 {
-  position: absolute;
-  top: 55%;
-  left: 65%;
-  width: 5rem;
-  height: 5rem;
-  transform: translate(-50%, -50%);
-  
-  border-radius: 5rem;
-  animation: bg-container-move 8s infinite alternate;
-  filter: blur(10px);
-}
+    .bg-container .bg-1, .bg-container .bg-2 {
+      position: absolute;
+      width: 6rem;
+      height: 6rem;
+      border-radius: 5rem;
+      animation: bg-container-move 8s infinite alternate;
+      filter: blur(10px);
+    }
+    .bg-container .bg-1 {
+      top: 55%;
+      left: 65%;
+    }
+    .bg-container .bg-2 {
+      top: 45%;
+      left: 40%;
+      animation-duration: 6s;
+    }
+    .bg-container:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(50px);
+    }
 
-.bg-container .bg-2 {
-  position: absolute;
-  top: 45%;
-  left: 40%;
-  width: 6rem;
-  height: 6rem;
-  transform: translate(-50%, -50%);
-  
-  border-radius: 5rem;
-  animation: bg-container-move 6s infinite alternate;
-  filter: blur(10px);
-}
+    .wrapper {
+      width: 6.5rem;
+      border-radius: 12px;
+      padding: 0.3rem 0.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3), -3px -3px 6px rgba(255, 255, 255, 0.8);
+      background-color: rgba(255, 255, 255, 0.3);
+      z-index: 1;
+      text-align: center;
+    }
 
-.bg-container:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(50px);
-}
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
 
-.wrapper {
-  width: 6.5rem;
-  border-radius: 12px;
-  padding: 0.3rem 0.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3), -3px -3px 6px rgba(255, 255, 255, 0.8);
-  background-color: rgba(255, 255, 255, 0.3);
-  z-index: 1;
-}
+    input#checkbox {
+      display: none;
+    }
 
-input#checkbox {
-  display: none;
-}
+    input#checkbox:checked + .button .dot {
+      left: calc(100% - 0.4rem - 0.1rem);
+      background-color: #4a6dc6;
+    }
 
-input#checkbox:checked+.button {
-  filter: none;
-}
+    .button {
+      position: relative;
+      width: 1.2rem;
+      height: 0.6rem;
+      border-radius: 1rem;
+      box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3), inset -2px -2px 5px rgba(255, 255, 255, 0.8);
+      cursor: pointer;
+    }
 
-input#checkbox:checked+.button .dot {
-  left: calc(100% - 0.4rem - 0.1rem);
-  background-color: #4a6dc6;
-}
+    .button .dot {
+      position: absolute;
+      width: 0.4rem;
+      height: 0.4rem;
+      left: 0.1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 50%;
+      box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3), -3px -3px 6px rgba(255, 255, 255, 0.8);
+      transition: all 0.3s;
+      background-color: #aab7d9;
+      will-change: left, background-color;
+    }
 
-.button {
-  position: relative;
-  width: 1.2rem;
-  height: 0.6rem;
-  border-radius: 1rem;
-  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3), inset -2px -2px 5px rgba(255, 255, 255, 0.8);
-  cursor: pointer;
-}
+    .message {
+      font-size: 0.4rem;
+      color: #333;
+    }
 
-.button .dot {
-  position: absolute;
-  width: 0.4rem;
-  height: 0.4rem;
-  left: 0.1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  border-radius: 50%;
-  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3), -3px -3px 6px rgba(255, 255, 255, 0.8);
-  transition: all 0.3s;
-  background-color: #aab7d9;
-  will-change: left, background-color;
-}
-
-@keyframes bg-container-move {
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
+    @keyframes bg-container-move {
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
   </style>
-  <body>
-    <div class="bg-container">
-      <div class="bg-1"></div>
-      <div class="bg-2"></div>
-    </div>
-    <div class="wrapper">
+  <script>
+    function updateMessage() {
+      const checkbox = document.getElementById('checkbox');
+      const message = document.getElementById('message');
+
+      if (checkbox.checked) {
+        message.textContent = "You will get notification when your certificate expires";
+      } else {
+        message.textContent = "You will not get any alerts";
+      }
+    }
+  </script>
+</head>
+<body onload="updateMessage()">
+  <div class="bg-container">
+    <div class="bg-1"></div>
+    <div class="bg-2"></div>
+  </div>
+  <div class="wrapper">
+    <div class="toggle-container">
       <div class="text">Email notifications</div>
-      <input id="checkbox" type="checkbox" checked="checked"/>
+      <input id="checkbox" type="checkbox" checked="checked" onchange="updateMessage()" />
       <label class="button" for="checkbox">
         <div class="dot"></div>
       </label>
     </div>
-  </body>
+    <p id="message" class="message"></p>
+  </div>
+</body>
 </html>
