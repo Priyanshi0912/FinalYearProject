@@ -14,8 +14,7 @@
             margin: 50px;
             text-align: center;
             background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
-            background-size: cover
-        
+            background-size: cover;
         }
         
         .container {
@@ -51,14 +50,30 @@
             font-size: 14px;
             color: #777;
         }
+
+        .back-button {
+            padding: 0.5rem 1rem; /* Increased padding for larger button */
+            background-color: #4a6dc6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.8rem; /* Increased font size */
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #3a5bbf;
+        }
     </style>
 </head>
 <body>
+    <!-- Back button -->
+    <button class="back-button" onclick="goBack()">Back</button>
 
     <div class="container">
         <div class="content">
             <h1>Copyright Information</h1>
-            <p>&copy; 2024 SSL Monitoring Tool. All rights reserved.</p>
 
             <h5>Content Ownership</h5>
             <p>All content published on this website, including text, graphics, logos, and code, is the property of our company or its content suppliers. Unauthorized use of this content is strictly prohibited.</p>
@@ -67,7 +82,7 @@
             <p>Any redistribution or reproduction of part or all of the contents in any form is prohibited unless you have our express written permission.</p>
 
             <h5>External Resources</h5>
-            <p>Any third-party content, links, or services mentioned on this website are owned by their respective owners, and we claim no ownership over such resources.</p>
+            <p>Links to external websites are provided solely for the convenience of users and do not indicate endorsement or affiliation. We are not responsible for the content found on third-party sites.</p>
 
             <h5>Copyright Violations</h5>
             <p>If you believe any content on this website violates copyright law, please contact us at <strong>support@example.com</strong>.</p>
@@ -85,5 +100,12 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript function for the Back button -->
+    <script>
+        function goBack() {
+            window.history.back(); // This will take the user to the previous page
+        }
+    </script>
 </body>
 </html>

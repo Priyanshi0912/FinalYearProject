@@ -1,83 +1,240 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Security Recommendations</title>
+    <title>SSL/TLS Security Recommendations</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
-        /* General Styling */
-        * {
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f3f8; /* Light purple background */
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', Arial, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #4a90e2, #6e49c6); /* Gradient background */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: #fff;
         }
 
         .container {
-            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
-            padding: 40px;
-            border-radius: 15px;
+            margin-top: 50px;
+            max-width: 1200px;
+        }
+
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            border: 1px solid #e2c2e1; /* Light purple border */
+        }
+
+        .card-header {
+            background-color: #7a5cc7; /* Light purple header */
+            color: #fff;
+            font-size: 1.5rem;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .card-body {
+            background-color: #ffffff;
+            padding: 20px;
+        }
+
+        .card-body ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .card-body ul li {
+            padding: 5px 0;
+        }
+
+        .card-body h5 {
+            font-size: 1.2rem;
+            color: #7a5cc7; /* Light purple for section titles */
+        }
+
+        .footer {
             text-align: center;
-            width: 80%;
-            max-width: 600px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+            margin-top: 40px;
+            color: #777;
         }
 
-        h1 {
-            font-size: 42px;
-            color: #000;
-            margin-bottom: 20px;
-            letter-spacing: 1.5px;
-            font-weight: bold;
+        .btn-info {
+            background-color: #7a5cc7; /* Light purple button */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
-        p {
-            font-size: 18px;
-            color: #000;
-            margin-top: 20px;
-            line-height: 1.6;
+        .btn-info:hover {
+            background-color: #6a4dbd; /* Darker purple hover effect */
+        }
+
+        .icon {
+            font-size: 30px;
+            margin-right: 10px;
+            color: #7a5cc7; /* Icon in light purple */
+        }
+
+        .recommendation-header {
+            background-color: #9c66d2; /* Light purple background for the main header */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 2rem;
+            border-radius: 8px;
+        }
+
+        .card-icon {
+            font-size: 40px;
+            color: #7a5cc7;
+        }
+
+        .recommendation-card {
+            margin: 20px 0;
         }
 
         .back-button {
-            margin-top: 30px;
-            padding: 15px 40px;
-            font-size: 18px;
-            background: linear-gradient(90deg, #4ca9d4, #7c49a2);
-            color: #000;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #9c66d2;
+            color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            text-decoration: none;
-            font-weight: bold;
-            display: inline-block;
         }
 
         .back-button:hover {
-            background: linear-gradient(90deg, #7f9cca, #765bcf);
-            box-shadow: 0 6px 20px rgba(100, 104, 228, 0.5);
+            background-color: #8c5abf;
         }
-
     </style>
 </head>
 <body>
+
     <div class="container">
-        <h1>Recommendations</h1>
-        <p>
-            It's important to upgrade to stronger cipher suites and regularly renew certificates to ensure the security and privacy of your website.
-        </p>
-        <a href="{% url 'analyze_certificate' %}" class="back-button">Back to Analyzer</a>
+        <div class="recommendation-header">
+            <h1>SSL/TLS Configuration Recommendations</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="card recommendation-card">
+                    <div class="card-header">
+                        <i class="icon fas fa-shield-alt"></i> SSL/TLS Protocol Version
+                    </div>
+                    <div class="card-body">
+                        <h5>Recommendation:</h5>
+                        <ul>
+                            <li>Disable SSLv2, SSLv3, TLS 1.0, and TLS 1.1</li>
+                            <li>Use TLS 1.2 or TLS 1.3 for secure connections</li>
+                        </ul>
+                        <p><strong>Grade:</strong> GOOD – Servers supporting only TLS 1.2 or 1.3 are secure.</p>
+                        <button class="btn-info" onclick="window.location.href='https://www.cloudflare.com/learning/ssl/ssl-tls-and-https/'">Learn More</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="card recommendation-card">
+                    <div class="card-header">
+                        <i class="icon fas fa-lock"></i> Cipher Suites
+                    </div>
+                    <div class="card-body">
+                        <h5>Recommendation:</h5>
+                        <ul>
+                            <li>Avoid weak ciphers like RC4, DES, 3DES, MD5</li>
+                            <li>Enable Forward Secrecy (PFS) using ECDHE or DHE</li>
+                            <li>Use strong ciphers with at least 128-bit key length</li>
+                        </ul>
+                        <p><strong>Grade:</strong> GOOD – Use of modern cipher suites ensures security.</p>
+                        <button class="btn-info" onclick="window.location.href='https://www.openssl.org/docs/manmaster/man5/ciphers.html'">Learn More</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="card recommendation-card">
+                    <div class="card-header">
+                        <i class="icon fas fa-key"></i> Key Size
+                    </div>
+                    <div class="card-body">
+                        <h5>Recommendation:</h5>
+                        <ul>
+                            <li>RSA key size should be at least 2048 bits</li>
+                            <li>ECC should have at least 224 bits for strong encryption</li>
+                        </ul>
+                        <p><strong>Grade:</strong> GOOD – Ensures that the keys are large enough to resist attacks.</p>
+                        <button class="btn-info" onclick="window.location.href='https://www.keylength.com/en/4/'">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="card recommendation-card">
+                    <div class="card-header">
+                        <i class="icon fas fa-calendar-check"></i> Certificate Validity Period
+                    </div>
+                    <div class="card-body">
+                        <h5>Recommendation:</h5>
+                        <ul>
+                            <li>Ensure certificates expire no more than 398 days after issuance</li>
+                            <li>Renew certificates promptly before expiry</li>
+                        </ul>
+                        <p><strong>Grade:</strong> GOOD – Timely renewal keeps connections secure.</p>
+                        <button class="btn-info" onclick="window.location.href='https://www.digicert.com/blog/ssl-certificate-expiration-period/'">Learn More</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="card recommendation-card">
+                    <div class="card-header">
+                        <i class="icon fas fa-user-shield"></i> Certificate Authority (CA)
+                    </div>
+                    <div class="card-body">
+                        <h5>Recommendation:</h5>
+                        <ul>
+                            <li>Use certificates from publicly trusted CAs</li>
+                            <li>Avoid self-signed certificates for public-facing sites</li>
+                        </ul>
+                        <p><strong>Grade:</strong> GOOD – Publicly trusted CAs ensure proper validation.</p>
+                        <button class="btn-info" onclick="window.location.href='https://www.digicert.com/'">Learn More</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="card recommendation-card">
+                    <div class="card-header">
+                        <i class="icon fas fa-signature"></i> Digital Signature Algorithm
+                    </div>
+                    <div class="card-body">
+                        <h5>Recommendation:</h5>
+                        <ul>
+                            <li>Use SHA-256 or better for hashing</li>
+                            <li>Avoid weak algorithms like SHA-1 and MD5</li>
+                        </ul>
+                        <p><strong>Grade:</strong> GOOD – Ensures resistance to collision attacks.</p>
+                        <button class="btn-info" onclick="window.location.href='https://www.csoonline.com/article/3517445/what-is-sha-1-sha-256-and-how-crypto-algorithms-keep-your-data-secure.html'">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="back-button" onclick="window.history.back()">Back</button>
     </div>
+
+    <!-- Bootstrap JS and FontAwesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -209,6 +209,9 @@
        
 </head>
 <body>
+    <div class="center-button">
+        <a href="{% url 'analyze_certificate' %}" class="button">Back to Analyzer</a>
+    </div>
 
     <h1>History of Analyzed URLs</h1>
     <br> 
@@ -243,9 +246,7 @@
         </table>        
     </div>
 
-    <div class="center-button">
-        <a href="{% url 'analyze_certificate' %}" class="button">Back to Analyzer</a>
-    </div>
+    
 
     <!-- Side Panel for Deleting History -->
     <div class="side-panel" id="side-panel">

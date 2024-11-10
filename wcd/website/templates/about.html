@@ -14,8 +14,7 @@
             margin: 50px;
             text-align: center;
             background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
-            background-size: cover
-           
+            background-size: cover;
         }
         .container {
             max-width: 800px;
@@ -24,13 +23,12 @@
         .content {
             background-color: #beccfc;
             padding: 20px;
-            Boeder-color: #050505;
+            border-color: #050505;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
             border-radius: 8px;
         }
         .content h1 {
             color: #050505;
-           
             text-align: center;
             margin-bottom: 20px;
         }
@@ -53,9 +51,28 @@
             font-size: 14px;
             color: #777;
         }
+
+        .back-button {
+            padding: 0.5rem 1rem;
+            background-color: #4a6dc6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #3a5bbf;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Back button -->
+    <button class="back-button" onclick="goBack()">Back</button>
 
     <div class="container">
         <div class="content">
@@ -83,5 +100,12 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript function for the Back button -->
+    <script>
+        function goBack() {
+            window.history.back(); // This will take the user to the previous page
+        }
+    </script>
 </body>
 </html>

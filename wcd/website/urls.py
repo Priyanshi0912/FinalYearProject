@@ -16,5 +16,6 @@ urlpatterns = [
     path('disclaimer/', views.disclaimer_view, name='disclaimer'),
     path('copyright/', views.copyright_view, name='copyright'),
     path('about/', views.about_view, name='about'),
+    path('faq/', views.faq_view, name='faq'),
 ]
 

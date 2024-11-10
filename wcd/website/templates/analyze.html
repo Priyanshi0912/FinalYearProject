@@ -11,14 +11,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css"
         rel="stylesheet" />
     <!-- <link rel="stylesheet" href="style.css" /> -->
-    <style>
-        /* Define background colors for different grades */
-        .grade-box.grade-a { background-color: #4caf50; color: white; } /* Green for A */
-        .grade-box.grade-b { background-color: #ffeb3b; color: black; } /* Yellow for B */
-        .grade-box.grade-c { background-color: #ff9800; color: white; } /* Orange for C */
-        .grade-box.grade-d { background-color: #f44336; color: white; } /* Red for D */
-        .grade-box.grade-f { background-color: #b71c1c; color: white; } /* Dark Red for F */
-    </style>
+
+
+  
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'Contact V12_files/analyze.css' %}"> 
     <!-- Above link is css link exclusively made for analyse page available in static folder -->
@@ -55,6 +50,11 @@
                                     <i class="bi bi-clock-history"></i> History
                                 </a>
                             </li>
+                            <li>
+                                <a href="{% url 'grading_system' %}" class="nav-link" style="color: rgb(255, 255, 255);">
+                                    <i class="bi bi-clock-history"></i> Grading
+                                </a>
+                            </li>
                         </ul>
         
                         <!-- Logout and Menu Icon Section (Right) -->
@@ -81,11 +81,11 @@
             <div class="overlay" id="overlay">
                 <button class="close-btn" id="close-btn">&times;</button>
                 <div class="overlay-content">
-                    
-                    <a href="{% url 'grading_system' %}" class="nav-link" >Gradings</a>
-                    <a href="{% url 'grading_system' %}"class="nav-link" >FAQ</a>
-                    <a href="{% url 'about' %}" class="nav-link" >About us</a>
                     <a href="{% url 'send_email_view' %}" class="nav-link" >Contact</a>
+                    <a href="{% url 'copyright' %}" class="nav-link" >Copyright</a>
+                    <a href="{% url 'faq' %}"class="nav-link" >FAQ</a>
+                    <a href="{% url 'about' %}" class="nav-link" >About us</a>
+                    
                     
                 </div>
             </div>
@@ -121,95 +121,88 @@
 
         <!-- Grade and Bar Graph -->
         
-        <!-- <div class="grade-section text-center flex justify-center">
-            <div class="grade flex justify-center items-center mb-3 mx-auto">
-                <h3 class="m-auto text-lg font-semibold pt-4 pb-2 -ml-2 mb-4">
-                    Security Grade:
-                </h3>
-                <div class="grade-box rounded ml-1 {{ grade_color_class }}">
-                    {{ grade }}
-                </div>
-            </div>
-        </div> -->
-        
-       <section id="analysis-report">
-        <section class="container mx-auto py-12 border-top border-bottom">
-            <h2 class="text-3xl font-bold text-center mb-3 py-3">
-                Security Grade Analysis
-            </h2>
-            <div class="flex justify-center">
-                <div class="w-full max-w-2xl bg-white p-6 rounded-lg shadow-md mb-5">
-                    
-                    <div class="flex justify-center items-center h-screen">
-                        <div class="grade-section text-center flex justify-center">
-                            <div class="grade flex justify-center items-center mb-3 mx-auto">
-                                <h3 class="m-auto text-lg font-semibold pt-4 pb-2 -ml-2 mb-4">
+        <section id="analysis-report">
+            <section class="container mx-auto py-12 border-top border-bottom">
+                <h2 class="text-3xl font-bold text-center mb-3 py-3">
+                    Security Grade Analysis
+                </h2>
+                <div class="flex justify-center">
+                    <div class="w-full max-w-2xl bg-white p-6 rounded-lg shadow-md mb-5">
+                        
+                        <!-- Security Grade Section -->
+                        <div class="flex justify-center items-center h-screen">
+                            <div class="grade-section text-center">
+                                <h3 class="text-lg font-semibold mb-4">
                                     Security Grade:
                                 </h3>
-                                <div class="grade-box bg-blue-500 text-white rounded ml-1">
+                                <div class="grade-box rounded px-4 py-2 text-white font-bold"
+                                     style="background-color: 
+                                         {% if grade == 'A' %}#4caf50
+                                         {% elif grade == 'B' %}#ffeb3b
+                                         {% elif grade == 'C' %}#ff9800
+                                         {% elif grade == 'D' %}#ff5722
+                                         {% elif grade == 'E' %}#f44336
+                                         {% elif grade == 'F' %}#9e9e9e
+                                         {% else %}#9e9e9e{% endif %};">
                                     {{ grade }}
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    
-                    <div class="bar-section flex flex-col justify-center items-center mt-8">
-                        <h2 class="text-3xl font-bold text-center mb-3 py-1">
-                            Your Website's Security Summary:
-                        </h2>
-
-                       
-                        <div class="w-full max-w-md bg-white p-4 rounded-lg shadow-md">
-                            <div class="bar-wrapper w-full mb-4 flex items-center">
-                                <div class="label w-1/3">Certificate</div>
-                                <div class="bar w-2/3 bg-blue-200">
-                                    <div class="bar-fill bg-blue-500"
-                                        style="width: {{ bar_percentages.certificate }}%;"></div>
+                        
+                        
+                        <!-- Security Summary Section -->
+                        <div class="bar-section flex flex-col justify-center items-center mt-8">
+                            <h2 class="text-3xl font-bold text-center mb-3 py-1">
+                                Your Website's Security Summary
+                            </h2>
+                            
+                            <div class="w-full max-w-md bg-white p-4 rounded-lg shadow-md">
+                                <div class="bar-wrapper w-full mb-4 flex items-center">
+                                    <div class="label w-1/3">Certificate</div>
+                                    <div class="bar w-2/3 bg-blue-200">
+                                        <div class="bar-fill bg-blue-500" style="width: {{ bar_percentages.certificate }}%;"></div>
+                                    </div>
+                                    <div class="percentage ml-4">
+                                        {{ bar_percentages.certificate }}%
+                                    </div>
                                 </div>
-                                <div class="percentage ml-4">
-                                    {{ bar_percentages.certificate }}%
+        
+                                <div class="bar-wrapper w-full mb-4 flex items-center">
+                                    <div class="label w-1/3">Protocol Support</div>
+                                    <div class="bar w-2/3 bg-blue-200">
+                                        <div class="bar-fill bg-blue-500" style="width: {{ bar_percentages.protocol_support }}%;"></div>
+                                    </div>
+                                    <div class="percentage ml-4">
+                                        {{ bar_percentages.protocol_support }}%
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="bar-wrapper w-full mb-4 flex items-center">
-                                <div class="label w-1/3">Protocol Support</div>
-                                <div class="bar w-2/3 bg-blue-200">
-                                    <div class="bar-fill bg-blue-500"
-                                        style="width: {{ bar_percentages.protocol_support }}%;"></div>
+        
+                                <div class="bar-wrapper w-full mb-4 flex items-center">
+                                    <div class="label w-1/3">Key Exchange</div>
+                                    <div class="bar w-2/3 bg-blue-200">
+                                        <div class="bar-fill bg-blue-500" style="width: {{ bar_percentages.key_exchange }}%;"></div>
+                                    </div>
+                                    <div class="percentage ml-4">
+                                        {{ bar_percentages.key_exchange }}%
+                                    </div>
                                 </div>
-                                <div class="percentage ml-4">
-                                    {{ bar_percentages.protocol_support }}%
-                                </div>
-                            </div>
-
-                            <div class="bar-wrapper w-full mb-4 flex items-center">
-                                <div class="label w-1/3">Key Exchange</div>
-                                <div class="bar w-2/3 bg-blue-200">
-                                    <div class="bar-fill bg-blue-500"
-                                        style="width: {{ bar_percentages.key_exchange }}%;"></div>
-                                </div>
-                                <div class="percentage ml-4">
-                                    {{ bar_percentages.key_exchange }}%
-                                </div>
-                            </div>
-
-                            <div class="bar-wrapper w-full mb-4 flex items-center">
-                                <div class="label w-1/3">Cipher Strength</div>
-                                <div class="bar w-2/3 bg-blue-200">
-                                    <div class="bar-fill bg-blue-500"
-                                        style="width: {{ bar_percentages.cipher_strength }}%;"></div>
-                                </div>
-                                <div class="percentage ml-4">
-                                    {{ bar_percentages.cipher_strength }}%
+        
+                                <div class="bar-wrapper w-full mb-4 flex items-center">
+                                    <div class="label w-1/3">Cipher Strength</div>
+                                    <div class="bar w-2/3 bg-blue-200">
+                                        <div class="bar-fill bg-blue-500" style="width: {{ bar_percentages.cipher_strength }}%;"></div>
+                                    </div>
+                                    <div class="percentage ml-4">
+                                        {{ bar_percentages.cipher_strength }}%
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </section>
-
+        
 
         <!--Certifcate Details:  -->
 

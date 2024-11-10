@@ -1,98 +1,132 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Disclaimer</title>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Custom Styling for Disclaimer Page -->
     <style>
         body {
-            margin: 50px;
-            text-align: center;
-            background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
-            background-size: cover
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f0f8;
+            margin: 0;
+            padding: 0;
+            color: #5d4b8a;
         }
+
+        header {
+            background-color: #9a7bb5;
+            padding: 20px 0;
+            text-align: center;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
         .container {
-            max-width: 800px;
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            margin: auto;
-        }
-        .content {
-            background-color: #beccfc;
-            padding: 20px;
-            border-color: #050505;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            width: 80%;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
-            max-width: 1000px;
-            opacity: 10;
-            margin: 0 auto;
+            overflow: hidden;
         }
-        .content h1 {
-            color: #050505;
-            font-size: 32px;
-            text-align: center;
-            margin-bottom: 20px;
+
+        .container h2 {
+            color: #7a4f9e;
+            font-size: 2rem;
         }
+
         .content p {
-            font-size: 16px;
+            font-size: 1.1rem;
             line-height: 1.6;
-            color: #333;
+            margin-bottom: 15px;
         }
+
         .content ul {
-            list-style-type: disc;
-            margin-left: 20px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            padding-left: 20px;
         }
-        .footer {
-            margin-top: 40px;
+
+        .content ul li {
+            list-style-type: disc;
+        }
+
+        footer {
+            background-color: #9a7bb5;
+            padding: 20px 0;
             text-align: center;
-            font-size: 14px;
-            color: #777;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
         }
     </style>
+
 </head>
+
 <body>
 
+    <!-- Header -->
+    <header>
+        <h1>Disclaimer</h1>
+    </header>
+
+    <!-- Disclaimer Content -->
     <div class="container">
         <div class="content">
-            <h1>Disclaimer</h1>
-            <p>Welcome to our SSL Monitoring and Analysis Tool. Before using our service, please read and understand the following disclaimer:</p>
+            <h2>General Information</h2>
+            <p>Welcome to our website. The following terms and conditions outline the disclaimer that applies to all the content and services provided on this website. By using this site, you agree to comply with and be bound by the terms of this disclaimer.</p>
 
-            <h5>1. Purpose of Service</h5>
-            <p>The information and services provided are for informational and educational purposes only. Users are solely responsible for maintaining their security infrastructure.</p>
+            <h2>Accuracy of Information</h2>
+            <p>While we strive to provide accurate and up-to-date information, we do not guarantee the completeness, accuracy, or reliability of the content on this website. All information is provided "as is" and should be verified independently before making any decisions based on it.</p>
 
-            <h5>2. No Legal Advice</h5>
-            <p>The content does not constitute legal advice. Users should consult their security teams or legal advisors for specific security or regulatory advice.</p>
+            <h2>External Links</h2>
+            <p>Our website may contain links to third-party websites. These links are provided for convenience and reference only. We do not endorse or take responsibility for the content or practices of these external sites. Use them at your own risk.</p>
 
-            <h5>3. Accuracy of Information</h5>
-            <p>We strive for accuracy but do not guarantee the completeness, accuracy, or reliability of the analysis results. The service may not detect all vulnerabilities.</p>
+            <h2>Liability</h2>
+            <p>We shall not be held liable for any damages or losses arising from the use of this website or reliance on its content. This includes, but is not limited to, direct, indirect, incidental, or consequential damages.</p>
 
-            <h5>4. No Warranties</h5>
-            <p>The service is provided "as is" without any warranties. We disclaim all warranties, including implied warranties of merchantability and fitness for a particular purpose.</p>
+            <h2>Use of Services</h2>
+            <p>Any services or products provided by this website are subject to the terms and conditions specified for each particular service. We reserve the right to modify or discontinue any services at any time without notice.</p>
 
-            <h5>5. Limitation of Liability</h5>
-            <p>We shall not be liable for any damages arising from the use of this service, including direct or indirect damages.</p>
+            <h2>Changes to Disclaimer</h2>
+            <p>We reserve the right to update or modify this disclaimer at any time. We encourage you to review this page periodically to stay informed about any changes.</p>
 
-            <h5>6. User Responsibility</h5>
-            <p>Users are responsible for regularly auditing and maintaining their infrastructure. This service is a supplementary tool and should not be relied upon solely for security purposes.</p>
-
-            <h5>7. Changes to Disclaimer</h5>
-            <p>We reserve the right to modify this disclaimer at any time without notice. Changes will be posted on this page and will take effect immediately.</p>
-
-            <h5>8. Contact Information</h5>
-            <p>If you have any questions, feel free to contact us at: <strong>support@example.com</strong>.</p>
-        </div>
-
-        <div class="footer">
-            &copy; 2024 SSL Monitoring Tool. All rights reserved.
+            <h2>Contact Information</h2>
+            <p>If you have any questions or concerns regarding this disclaimer, feel free to contact us at:</p>
+            <ul>
+                <li><strong>Email:</strong> weakcipherdetector.com</li>
+                <li><strong>Phone:</strong> </li>
+            </ul>
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 CertiScan | <a href="/terms">Terms of Service</a> | <a href="/privacy-policy">Privacy Policy</a></p>
+    </footer>
+
 </body>
+
 </html>

@@ -354,18 +354,7 @@ def analyze_certificate(request):
     return render(request, 'analyze.html')
 
 
-# views.py or wherever you're handling the grade calculation
-def get_grade_color_class(grade):
-    if grade == 'A':
-        return 'grade-a'
-    elif grade == 'B':
-        return 'grade-b'
-    elif grade == 'C':
-        return 'grade-c'
-    elif grade == 'D':
-        return 'grade-d'
-    else:
-        return 'grade-f'
+
 def analyzed_urls(request):
     if request.user.is_authenticated:
         urls = AnalyzedURL.objects.filter(user=request.user).order_by('-date_analyzed')
@@ -441,3 +430,6 @@ def copyright_view(request):
 # View for the About Us page
 def about_view(request):
     return render(request, 'about.html')
+
+def faq_view(request):
+    return render(request, 'faq.html')

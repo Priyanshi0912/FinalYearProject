@@ -12,12 +12,12 @@
     }
 
     html {
-      font-size: 6.25vmax;
+      font-size: 5vmax; /* Decreased the base font size */
     }
 
     @media (max-width: 992px) {
       html {
-        font-size: 60px;
+        font-size: 50px; /* Adjusted for small screens */
       }
     }
 
@@ -27,12 +27,13 @@
       justify-content: center;
       align-items: center;
       color: #333;
-      font-size: 0.3rem;
+      font-size: 0.25rem; /* Decreased font size here */
       font-family: "Space Grotesk", sans-serif;
       position: relative;
       overflow: hidden;
       background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
     }
+    
 
     .bg-container {
       position: absolute;
@@ -45,8 +46,8 @@
 
     .bg-container .bg-1, .bg-container .bg-2 {
       position: absolute;
-      width: 6rem;
-      height: 6rem;
+      width: 5rem;
+      height: 5rem;
       border-radius: 5rem;
       animation: bg-container-move 8s infinite alternate;
       filter: blur(10px);
@@ -71,13 +72,13 @@
     }
 
     .wrapper {
-      width: 6.5rem;
+      width: 5rem; /* Reduced width */
       border-radius: 12px;
       padding: 0.3rem 0.5rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem; /* Reduced gap */
       box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3), -3px -3px 6px rgba(255, 255, 255, 0.8);
       background-color: rgba(255, 255, 255, 0.3);
       z-index: 1;
@@ -123,8 +124,23 @@
     }
 
     .message {
-      font-size: 0.4rem;
+      font-size: 0.3rem; /* Reduced font size for the message */
       color: #333;
+    }
+
+    .back-button {
+      padding: 0.2rem 0.5rem; /* Reduced padding */
+      background-color: #4a6dc6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.25rem; /* Reduced font size */
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .back-button:hover {
+      background-color: #3a5bbf;
     }
 
     @keyframes bg-container-move {
@@ -144,6 +160,10 @@
         message.textContent = "You will not get any alerts";
       }
     }
+
+    function goBack() {
+      window.history.back();
+    }
   </script>
 </head>
 <body onload="updateMessage()">
@@ -160,6 +180,8 @@
       </label>
     </div>
     <p id="message" class="message"></p>
+    <!-- Back button -->
+    <button class="back-button" onclick="goBack()">Back</button>
   </div>
 </body>
 </html>
