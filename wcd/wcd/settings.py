@@ -91,7 +91,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "cipher",
         "USER": "root",
-        "PASSWORD":"nida2003",
+        "PASSWORD":"12345",
         "HOST":'localhost',
         "PORT":"3306",
 
@@ -155,15 +155,24 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # settings.py
+# EMAIL_HOST_USER = 'priya9nshi12@gmail.com'  # Your email address
+# EMAIL_HOST_PASSWORD = 'Mansi@123'  # Your email password
+# DEFAULT_FROM_EMAIL = 'priya9nshi12@gmail.com'
+import os
+from dotenv import load_dotenv
 
+# Load environment variables from .env file
+load_dotenv()
+
+# Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # For Gmail
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'priya9nshi12@gmail.com'  # Your email address
-EMAIL_HOST_PASSWORD = ''  # Your email password
-DEFAULT_FROM_EMAIL = 'priya9nshi12@gmail.com'
 
-# import os
+# Environment variables for sensitive information
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_RECEIVER = 'priyanshi@rknec.edu'
 
-#EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') 
+

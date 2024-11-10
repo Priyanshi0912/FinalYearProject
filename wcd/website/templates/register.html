@@ -1,7 +1,7 @@
 
 
 
- {% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,44 +14,51 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', Arial, sans-serif;
+            font-family: 'Montserrat-Regular', sans-serif;
         }
 
         body {
-            background: url("{% static 'images/bgimage2.jpg' %}") no-repeat center center fixed; /* Corrected path for the background image */
+            background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%); 
+            font-family: 'Montserrat-Regular', sans-serif;
             background-size: cover;
-            background-color: #726e68a3;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
 
+
         .register-container {
-            background-color: #beccfc;
-            padding: 60px;
+            background-image: linear-gradient(120deg, #b585e2 0%, #d284e1 100%);
+            font-family: 'Montserrat-Regular', sans-serif;
+            padding: 80px;
             border-radius: 18px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            border: 4px solid #050505;
+            border-color: #050505;
             width: 700px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
             text-align: center;
         }
 
         .register-box h2 {
             margin-bottom: 20px;
-            font-size: 28px;
+            font-size: 30px;
             font-weight: bold;
             color: #171917;
+            font-family: 'Montserrat-Bold', sans-serif;
         }
 
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-align: left;
+            font-family: 'Montserrat-Regular', sans-serif;
             position: relative; /* Needed for the tooltip */
         }
 
         .input-group label {
-            font-size: 16px;
+            font-size: 20px;
             color: #171917;
+            font-family: 'Montserrat-Regular', sans-serif;
         }
 
         .input-group input {
@@ -64,43 +71,50 @@
             background-color: #484848;
             color: #fff;
             outline: none;
+            font-family: 'Montserrat-Regular', sans-serif;
         }
 
         .input-group input::placeholder {
-            color: #b3d9ff;
+            color: #b6b3b3; /* Placeholder text color */
+            font-family: 'Montserrat-Regular', sans-serif;
         }
 
         .btn-register {
             width: 100%;
             padding: 12px;
-            background: linear-gradient(90deg, #4ca9d4, #4258b9);
             border: none;
             border-radius: 10px;
-            color: #131212;
+            color: white;
+            background: #212529;
             font-size: 18px;
             cursor: pointer;
             transition: background 0.3s ease;
+            font-family: 'Montserrat-Regular', sans-serif;
         }
 
         .btn-register:hover {
-            background: linear-gradient(90deg, #2f6cce, #5b7acf);
+            background-color: #242426;
+            font-family: 'Montserrat-Regular', sans-serif;
         }
 
         .login-link {
             margin-top: 15px;
-            font-size: 14px;
+            font-size: 18px;
+            font-family: 'Montserrat-Regular', sans-serif;
             color: #171917;
         }
 
         .login-link a {
             color: #000;
             text-decoration: none;
+            font-family: 'Montserrat-Regular', sans-serif;
             font-weight: bold;
         }
 
         .login-link a:hover {
             color: #000;
-            text-decoration: none;
+            text-decoration: underline;
+            font-family: 'Montserrat-Regular', sans-serif;
             font-weight: bold;
         }
 
