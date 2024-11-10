@@ -147,15 +147,16 @@ def check_certificate_validity(cert):
 
     return None  # No warnings
 
-
 def check_protocol_version(hostname, port=443):
     context = ssl.create_default_context()
     warning_list = []
+    
+    #protocol version with score
     protocol_scores = {
         'SSLv2': 0,
-        'SSLv3': 20,
-        'TLSv1': 60,
-        'TLSv1.1': 80,
+        'SSLv3': 80,
+        'TLSv1': 90,
+        'TLSv1.1': 95,
         'TLSv1.2': 100,
         'TLSv1.3': 100,
     }
@@ -165,8 +166,11 @@ def check_protocol_version(hostname, port=443):
             protocol_version = secure_sock.version()
             score = protocol_scores.get(protocol_version, 0)
 
-            if protocol_version in ['SSLv2', 'SSLv3']:
-                warning_list.append(f"Warning: {protocol_version} is deprecated due to serious vulnerabilities (e.g., Poodle).")
+            # Add warnings based on the protocol version
+            if protocol_version == 'SSLv2':
+                warning_list.append(f"Warning: {protocol_version} is deprecated due to serious vulnerabilities.")
+            elif protocol_version == 'SSLv3':
+                warning_list.append(f"Warning: {protocol_version} is deprecated due to the Poodle vulnerability.")
             elif protocol_version in ['TLSv1', 'TLSv1.1']:
                 warning_list.append(f"Warning: {protocol_version} suffers from vulnerabilities and should not be used.")
 
@@ -177,10 +181,12 @@ def check_key_size(cert):
     public_key = cert.public_key()
     key_size = public_key.key_size
 
+    # Update key_score based on provided scoring rules
     key_score = (
-        10 if key_size < 512 else
-        20 if key_size < 1024 else
-        50 if key_size < 2048 else
+        0 if key_size < 512 else
+        20 if key_size == 512 else
+        40 if key_size < 1024 else
+        80 if key_size < 2048 else
         90 if key_size < 4096 else
         100
     )
@@ -192,28 +198,48 @@ def check_key_size(cert):
 
     return key_size, key_score, key_warning
 
+import ssl
+import socket
+from cryptography import x509
+from cryptography.hazmat.backends import default_backend
 
-# def check_cipher_strength(hostname, port=443):
-#     context = ssl.create_default_context()
-#     with socket.create_connection((hostname, port)) as sock:
-#         with context.wrap_socket(sock, server_hostname=hostname) as secure_sock:
-#             cipher = secure_sock.cipher()
-#             cipher_name = cipher[0] if cipher else None
-            
-#             # Example scores based on typical cipher names
-#             if cipher_name:
-#                 cipher_scores = {
-#                     'AES256-GCM-SHA384': 100,
-#                     'AES128-GCM-SHA256': 100,
-#                     'AES256-SHA256': 80,
-#                     'RC4-SHA': 30,
-#                     'EXP-RC4-MD5': 0,
-#                 }
-#                 score = cipher_scores.get(cipher_name, 0)
-#             else:
-#                 score = 0
-            
-#             return score
+def check_signature_algorithm_strength(hostname, port=443):
+    # Dictionary of signature algorithms and scores based on security best practices
+    signature_scores = {
+        'ecdsa-with-SHA384': 100,
+        'ecdsa-with-SHA256': 95,
+        'rsaPSSwithSHA512': 90,
+        'rsaPSSwithSHA256': 85,
+        'sha256WithRSAEncryption': 80,
+        'sha384WithRSAEncryption': 80,
+        'sha1WithRSAEncryption': 20,
+        'sha1WithDSA': 10,
+        'md5WithRSAEncryption': 0,
+        'sha1WithECDSA': 15
+    }
+    
+    try:
+        # Establish a connection and retrieve the server certificate
+        context = ssl.create_default_context()
+        with socket.create_connection((hostname, port)) as sock:
+            with context.wrap_socket(sock, server_hostname=hostname) as secure_sock:
+                der_cert = secure_sock.getpeercert(binary_form=True)
+                
+                # Load the certificate using cryptography library to get the signature algorithm
+                cert = x509.load_der_x509_certificate(der_cert, default_backend())
+                
+                # Get the signature algorithm name
+                sig_alg_name = cert.signature_algorithm_oid._name
+                print(f"Signature Algorithm in certificate: {sig_alg_name}")
+                
+                # Match the algorithm name to the dictionary score
+                score = signature_scores.get(sig_alg_name, 5)  # Default score is 5 if not found
+                return score
+
+    except Exception as e:
+        print(f"Error occurred: {e}")
+        return 0
+
 
 
 
@@ -267,7 +293,6 @@ def analyze_certificate(request):
 
             # Analyze protocol and cipher
             protocol_version, protocol_score, protocol_warnings = check_protocol_version(hostname)
-            #cipher_score = check_cipher_strength(hostname)
 
             # Combine warnings from protocol check
             warnings.extend(protocol_warnings)
@@ -276,23 +301,26 @@ def analyze_certificate(request):
             key_size, key_score, key_warning = check_key_size(cert)
             if key_warning:
                 warnings.append(key_warning)
+            
 
+            cipher_score=check_signature_algorithm_strength(hostname)
             # Calculate overall score
-            overall_score = calculate_overall_score(protocol_score, key_score, 100)#cipher_score)
+            overall_score = calculate_overall_score(protocol_score, key_score, cipher_score)
 
             # Determine the grade
             grade = grade_certificate(overall_score)
             signature_algorithm = cert.signature_algorithm_oid._name
             # Set bar percentages based on the results from the functions
             bar_percentages = {
-                'certificate': overall_score ,#80 if grade == 'A' else 60 if grade == 'B' else 40,
+                'certificate': overall_score ,      #Use the score from overall score
                 'protocol_support': protocol_score,  # Use the score from check_protocol_version
                 'key_exchange': key_score,            # Use the score from check_key_size
-                'cipher_strength': 100,#cipher_score,      # Use the score from check_cipher_strength
+                'cipher_strength': cipher_score,      # Use the score from check_cipher_strength
             }
 
             # Collect certificate information for rendering
             details = {
+                'hostname':hostname,
                 'warnings': warnings,
                 'bar_percentages': bar_percentages,
                 'hostname': hostname,
@@ -326,7 +354,18 @@ def analyze_certificate(request):
     return render(request, 'analyze.html')
 
 
-
+# views.py or wherever you're handling the grade calculation
+def get_grade_color_class(grade):
+    if grade == 'A':
+        return 'grade-a'
+    elif grade == 'B':
+        return 'grade-b'
+    elif grade == 'C':
+        return 'grade-c'
+    elif grade == 'D':
+        return 'grade-d'
+    else:
+        return 'grade-f'
 def analyzed_urls(request):
     if request.user.is_authenticated:
         urls = AnalyzedURL.objects.filter(user=request.user).order_by('-date_analyzed')

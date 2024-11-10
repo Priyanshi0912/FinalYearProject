@@ -11,7 +11,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css"
         rel="stylesheet" />
     <!-- <link rel="stylesheet" href="style.css" /> -->
-
+    <style>
+        /* Define background colors for different grades */
+        .grade-box.grade-a { background-color: #4caf50; color: white; } /* Green for A */
+        .grade-box.grade-b { background-color: #ffeb3b; color: black; } /* Yellow for B */
+        .grade-box.grade-c { background-color: #ff9800; color: white; } /* Orange for C */
+        .grade-box.grade-d { background-color: #f44336; color: white; } /* Red for D */
+        .grade-box.grade-f { background-color: #b71c1c; color: white; } /* Dark Red for F */
+    </style>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'Contact V12_files/analyze.css' %}"> 
     <!-- Above link is css link exclusively made for analyse page available in static folder -->
@@ -113,6 +120,18 @@
         {% if grade %}
 
         <!-- Grade and Bar Graph -->
+        
+        <!-- <div class="grade-section text-center flex justify-center">
+            <div class="grade flex justify-center items-center mb-3 mx-auto">
+                <h3 class="m-auto text-lg font-semibold pt-4 pb-2 -ml-2 mb-4">
+                    Security Grade:
+                </h3>
+                <div class="grade-box rounded ml-1 {{ grade_color_class }}">
+                    {{ grade }}
+                </div>
+            </div>
+        </div> -->
+        
        <section id="analysis-report">
         <section class="container mx-auto py-12 border-top border-bottom">
             <h2 class="text-3xl font-bold text-center mb-3 py-3">
@@ -120,7 +139,7 @@
             </h2>
             <div class="flex justify-center">
                 <div class="w-full max-w-2xl bg-white p-6 rounded-lg shadow-md mb-5">
-                    <!-- Grade: -->
+                    
                     <div class="flex justify-center items-center h-screen">
                         <div class="grade-section text-center flex justify-center">
                             <div class="grade flex justify-center items-center mb-3 mx-auto">
@@ -134,13 +153,13 @@
                         </div>
                     </div>
 
-                    <!-- Bar Graph Section -->
+                    
                     <div class="bar-section flex flex-col justify-center items-center mt-8">
                         <h2 class="text-3xl font-bold text-center mb-3 py-1">
                             Your Website's Security Summary:
                         </h2>
 
-                        <!-- Smaller Container for Bars -->
+                       
                         <div class="w-full max-w-md bg-white p-4 rounded-lg shadow-md">
                             <div class="bar-wrapper w-full mb-4 flex items-center">
                                 <div class="label w-1/3">Certificate</div>
@@ -191,6 +210,7 @@
             </div>
         </section>
 
+
         <!--Certifcate Details:  -->
 
         <section class="container mx-auto py-12">
@@ -202,6 +222,15 @@
                 <div class="w-full max-w-2xl bg-white p-6 rounded-lg shadow-md mb-5">
                     <table class="min-w-full divide-y divide-gray-300 border border-gray-300">
                         <tbody class="bg-white">
+                            <tr class="bg-gray-50">
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-300">
+                                    Hostname
+                                </th>
+                                <td class="px-6 py-3 text-sm text-gray-900 border border-gray-300">
+                                    {{ hostname }}
+                                </td>
+                            </tr>
                             <tr class="bg-gray-50">
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-300">
@@ -294,6 +323,7 @@
                                 <tr>
                                     <td class="border border-gray-500">{{ warning }}</td>
                                 </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -301,7 +331,7 @@
             </div>
         </section>
        </section> 
-        {% endfor %}
+        
 
         <!-- Download Button -->
         <div class="buttons flex justify-center mt-4 space-x-1">
