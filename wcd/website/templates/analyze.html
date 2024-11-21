@@ -304,7 +304,7 @@
         </section>
 
         <!-- Warning Section -->
-        {% for warning in warnings %}
+        
         <section class="container mx-auto py-12">
             <h2 class="text-3xl font-bold text-center mb-8 py-3">Warnings</h2>
 
@@ -313,7 +313,8 @@
                     <div class="warning-section">
                         <table>
                             <tbody>
-                                <tr>
+                                {% for warning in warnings %}
+                                <tr>  
                                     <td class="border border-gray-500">{{ warning }}</td>
                                 </tr>
                                 {% endfor %}
