@@ -156,7 +156,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #settings.py
 EMAIL_HOST_USER = 'priya9nshi12@gmail.com'  # Your email address
-EMAIL_HOST_PASSWORD = 'Mansi@123'  # Your email password
+EMAIL_HOST_PASSWORD = ''  # Your email password
 DEFAULT_FROM_EMAIL = 'priya9nshi12@gmail.com'
 import os
 from dotenv import load_dotenv
