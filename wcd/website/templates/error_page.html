@@ -6,89 +6,131 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/4b9ba14b0f.js" crossorigin="anonymous"></script>
-  <style>
-    body {
-      background-image: linear-gradient(120deg, #e0c3fc , #8ec5fc 100%);
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      font-family: 'Nunito Sans', sans-serif;
-    }
+    <script src="https://kit.fontawesome.com/4b9ba14b0f.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-image: linear-gradient(120deg, #e0c3fc, #8ec5fc 100%);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Nunito Sans', sans-serif;
+        }
 
-    .mainbox {
-      background-image: linear-gradient(120deg, #8ec5fc 100%);
-      margin: auto;
-      height: 600px;
-      width: 600px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
+        .mainbox {
+            background-image: linear-gradient(120deg, #8ec5fc 100%);
+            margin: auto;
+            height: auto;
+            width: 600px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+        }
 
-    .error-text {
-      color: #ffffff;
-      font-size: 4rem;
-      margin-bottom: 20px;
-    }
+        .error-text {
+            color: #ffffff;
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
 
-    .number {
-      color: #ffffff;
-      font-size: 11rem;
-      display: flex;
-      align-items: center;
-    }
+        .number {
+            color: #ffffff;
+            font-size: 11rem;
+            display: flex;
+            align-items: center;
+        }
 
-    .number .digit {
-      margin: 0 10px;
-    }
+        .number .digit {
+            margin: 0 10px;
+        }
 
-    .icon {
-      font-size: 8.5rem;
-      color: #ffffff;
-      animation: spin 2s infinite linear;
-    }
+        .icon {
+            font-size: 8.5rem;
+            color: #ffffff;
+            animation: spin 2s infinite linear;
+        }
 
-    .msg {
-      font-size: 1.6rem;
-      color: #ffffff;
-      margin-top: 20px;
-    }
+        .msg {
+            font-size: 1.6rem;
+            color: #ffffff;
+            margin-top: 20px;
+        }
 
-    a {
-      text-decoration: none;
-      color: white;
-    }
+        a {
+            text-decoration: none;
+            color: white;
+        }
 
-    a:hover {
-      text-decoration: underline;
-    }
-    p{
-        color: black;
-    }
+        a:hover {
+            text-decoration: underline;
+        }
 
-    @keyframes spin {
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-  </style>
+        .reasons {
+            margin-top: 30px;
+            color: #000;
+        }
+
+        .reasons table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .reasons td {
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+            font-size: 1.2rem;
+            border: 1px solid #ddd;
+            background-color: #fff;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="mainbox">
         <div class="number">
-          <div class="digit">4</div>
-          <i class="far fa-question-circle icon"></i>
-          <div class="digit">4</div>
+            <div class="digit">4</div>
+            <div class="digit">0</div>
+            <div class="digit">4</div>
         </div>
         
-        <div class="msg"><p>{{ message }}</p><p>Let's go <a href="{% url 'analyze_certificate' %}">home</a> and try from there.</p></div>
-      </div>
+        <div class="msg">
+            <p>{{ message }}</p>
+            <p>Let's go <a href="{% url 'analyze_certificate' %}">home</a> and try from there.</p>
+        </div>
 
+        <!-- Grade and Reasons Section -->
+        <div class="reasons">
+            <p><strong>Grade = T</strong></p>
+            <table>
+                <tr>
+                    <td>🎫 Certificate expired</td>
+                    <td>🎫 Wrong host</td>
+                    <td>🎫 Self-signed</td>
+                </tr>
+                <tr>
+                    <td>🎫 Untrusted root</td>
+                    <td>🎫 Revoked</td>
+                    <td>🎫 Pinning test</td>
+                </tr>
+                <tr>
+                    <td>🎫 No common name</td>
+                    <td>🎫 No subject</td>
+                    <td>🎫 Incomplete chain</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </body>
 </html>

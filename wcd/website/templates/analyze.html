@@ -85,6 +85,7 @@
                     <a href="{% url 'copyright' %}" class="nav-link" >Copyright</a>
                     <a href="{% url 'faq' %}"class="nav-link" >FAQ</a>
                     <a href="{% url 'about' %}" class="nav-link" >About us</a>
+                    <a href="{% url 'disclaimer' %}" class="nav-link" >Disclaimer</a>
                     
                     
                 </div>
@@ -121,7 +122,7 @@
 
         <!-- Grade and Bar Graph -->
         
-        <section id="analysis-report">
+        
             <section class="container mx-auto py-12 border-top border-bottom">
                 <h2 class="text-3xl font-bold text-center mb-3 py-3">
                     Security Grade Analysis
@@ -201,11 +202,11 @@
                     </div>
                 </div>
             </section>
-        </section>
+        
         
 
         <!--Certifcate Details:  -->
-
+        <section id="analysis-report">
         <section class="container mx-auto py-12">
             <h2 class="text-3xl font-bold text-center mb-8 py-3">
                 Certificate Details
@@ -302,6 +303,7 @@
             </div>
             <div class="px-3 py-2 border-bottom mb-3"></div>
         </section>
+    </section>
 
         <!-- Warning Section -->
         {% for warning in warnings %}

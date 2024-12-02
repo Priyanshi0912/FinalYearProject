@@ -104,6 +104,7 @@ def check_trusted_ca(cert):
         "QuoVadis",
         "Trustwave",
         "Certum",
+        "Google Trust Services",
         "Network Solutions"
     }
 
@@ -378,30 +379,62 @@ def send_email_view(request):
     # Render the email form HTML page
     return render(request, 'send_email.html')
 
+
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
+from django.shortcuts import render, redirect
+from .models import NotificationSettings 
+
 def notification_alert(request):
+    # Check if the user is authenticated
+    if not request.user.is_authenticated:
+        messages.error(request, "You need to log in to manage notifications.")
+        return redirect('login')  # Redirect to login if not authenticated
+
     # Retrieve or create notification settings for the current user
     notification_settings, created = NotificationSettings.objects.get_or_create(user=request.user)
-    
-    if request.method == 'POST':
-        if 'toggle' in request.POST:
-            # Toggle the alert status
-            notification_settings.alerts_on = not notification_settings.alerts_on
-            notification_settings.save()
-            
-            # Send email if alerts are on
-            if notification_settings.alerts_on:
-                subject = 'ALERT FROM WCD'
-                message = 'RENEW YOUR CERTIFICATE NOW'
-                recipient = 'priyanshi@rknec.edu'
-        
-        # Send the email using the send_mail function
+
+    if request.method == 'POST' and 'toggle' in request.POST:
+        # Toggle the alert status
+        notification_settings.alerts_on = not notification_settings.alerts_on
+        notification_settings.save()
+
+        if notification_settings.alerts_on:
+            # Prepare the email details
+            subject = 'ALERT FROM WCD'
+            message = f"""Dear {request.user.username},
+
+We hope this message finds you well.
+
+This is a friendly reminder from CertiScan that the SSL certificate for your website has expired. Maintaining an up-to-date SSL certificate is crucial to ensure the security of your site and protect your users’ data.
+
+What does this mean?
+With an expired certificate, your website is at risk of losing encryption, leaving it vulnerable to potential security breaches. An expired SSL certificate may also impact your website’s trust and visibility, as modern browsers often flag unsecured websites.
+
+What to do next?
+To resolve this, please renew your SSL certificate as soon as possible to ensure your website remains secure and accessible.
+
+If you have any questions or need assistance, feel free to reach out to our support team. We're here to help!
+
+Thank you for trusting CertiScan to monitor your website's SSL security.
+
+Best regards,
+The CertiScan Team
+"""
+            recipient = request.user.email  # Use the user's email
+
+            # Send the email and handle potential errors
+            try:
                 send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [recipient])
-                
-            messages.success(request, "Alerts have been turned ON and a notification email has been sent.")
+                messages.success(request, "Alerts have been turned ON and a notification email has been sent.")
+            except Exception as e:
+                messages.error(request, f"An error occurred while sending the notification email: {e}")
         else:
             messages.success(request, "Alerts have been turned OFF.")
-    
+
     return render(request, 'notification_alert.html', {'notification_settings': notification_settings})
+
 
 def contact_view(request):
     if request.method == "POST":
